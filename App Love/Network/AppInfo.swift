@@ -20,8 +20,8 @@ class AppInfo {
                 
             case .success(let data):
                 let rootDic = data as! [String : AnyObject]
-                if let resultsArray = rootDic["results"] as? [AnyObject],
-                    let finalDic = resultsArray[0] as? [String: AnyObject] {
+                if let resultsArray = rootDic["results"] as? [AnyObject], let firstElement = resultsArray.first,
+                    let finalDic = firstElement as? [String: AnyObject] {
                         let appStoreModel = AppModel(resultsDic:finalDic)
                     completion(appStoreModel, true , nil)
                 }
