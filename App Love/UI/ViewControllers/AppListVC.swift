@@ -80,7 +80,7 @@ class AppListVC: UIViewController {
         }
     }
     
-    @IBAction func onSideMenuButton(button: HamburgerButton) {
+    @IBAction func onSideMenuButton(_ button: HamburgerButton) {
         button.showsMenu = false // morphs to arrow
         onMenuOpen()
     }
@@ -106,11 +106,11 @@ class AppListVC: UIViewController {
         }
     }
     
-    @IBAction func onSearch(sender: AnyObject) {
+    @IBAction func onSearch(_ sender: AnyObject) {
         performSegue(withIdentifier: "AppSearch", sender: nil)
     }
     
-    @IBAction func editMode(sender: UIBarButtonItem) {
+    @IBAction func editMode(_ sender: UIBarButtonItem) {
         if (self.tableView.isEditing) {
             sender.title = "Edit"
             self.tableView.setEditing(false, animated: true)

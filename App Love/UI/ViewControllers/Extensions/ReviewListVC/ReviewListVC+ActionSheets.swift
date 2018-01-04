@@ -14,28 +14,28 @@ extension ReviewListVC {
     func displaySortActionSheet(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let ratingSortAction = UIAlertAction(title: "Sort by Rating", style: .default) { action -> Void in
-//            self.allReviews.sort(by: { (a, b) -> Bool in
-//                return UIContentSizeCategory(rawValue: a.rating!) > UIContentSizeCategory(rawValue: b.rating!)
-//            })
-            DispatchQueue.main.sync(execute: {
+            DispatchQueue.main.async(execute: {
+                self.allReviews.sort(by: { (a, b) -> Bool in
+                    return a.rating!.localizedCaseInsensitiveCompare(b.rating!) == ComparisonResult.orderedAscending
+                })
                 self.tableView.reloadData()
                 self.tableView.setContentOffset(CGPoint.zero, animated:true)
             })
         }
         let versionSortAction = UIAlertAction(title: "Sort by Version", style: .default) { action -> Void in
-//            self.allReviews.sort(by: { (a, b) -> Bool in
-//                return UIContentSizeCategory(rawValue: a.version!) > UIContentSizeCategory(rawValue: b.version!)
-//            })
-            DispatchQueue.main.sync(execute: {
+            DispatchQueue.main.async(execute: {
+                self.allReviews.sort(by: { (a, b) -> Bool in
+                    return a.version!.localizedCaseInsensitiveCompare(b.version!) == ComparisonResult.orderedAscending
+                })
                 self.tableView.reloadData()
                 self.tableView.setContentOffset(CGPoint.zero, animated:true)
             })
         }
         let territorySortAction = UIAlertAction(title: "Sort by Territory", style: .default) { action -> Void in
-//            self.allReviews.sort(by: { (a, b) -> Bool in
-//                return UIContentSizeCategory(rawValue: a.territory!) > UIContentSizeCategory(rawValue: b.territory!)
-//            })
-            DispatchQueue.main.sync(execute: {
+            DispatchQueue.main.async(execute: {
+                self.allReviews.sort(by: { (a, b) -> Bool in
+                    return a.territory!.localizedCaseInsensitiveCompare(b.territory!) == ComparisonResult.orderedAscending
+                })
                 self.tableView.reloadData()
                 self.tableView.setContentOffset(CGPoint.zero, animated:true)
             })

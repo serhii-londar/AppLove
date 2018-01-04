@@ -35,11 +35,11 @@ class LoadOptionsVC: UIViewController, ElasticMenuTransitionDelegate {
         slider.minimumValue = 1
         loadVersionSwitch.isOn = Defaults.getLoadAllBool()
         slider.value = Float(Defaults.getMaxPagesToLoadInt())
-        onSliderChanged(slider: slider)
-        onSwitchChanged(button: loadVersionSwitch)
+        onSliderChanged(slider)
+        onSwitchChanged(loadVersionSwitch)
     }
     
-    @IBAction func onSwitchChanged(button: UISwitch) {
+    @IBAction func onSwitchChanged(_ button: UISwitch) {
         if button.isOn {
             switchLabel.text = "Load All Versions"
         }
@@ -49,16 +49,16 @@ class LoadOptionsVC: UIViewController, ElasticMenuTransitionDelegate {
         Defaults.setLoadAll(loadAll: button.isOn)
     }
     
-    @IBAction func onSliderChanged(slider: UISlider) {
+    @IBAction func onSliderChanged(_ slider: UISlider) {
         let sliderIntValue = Int(round(slider.value))
         sliderLabel.text = "Load up to \(sliderIntValue*50) Reviews per territory"
     }
     
-    @IBAction func onSliderTouchUpInside(sender: UISlider) {
+    @IBAction func onSliderTouchUpInside(_ sender: UISlider) {
         snapSaveSlider(slider: slider)
     }
     
-    @IBAction func onSliderTouchUpOutside(slider: UISlider) {
+    @IBAction func onSliderTouchUpOutside(_ slider: UISlider) {
         snapSaveSlider(slider: slider)
     }
     

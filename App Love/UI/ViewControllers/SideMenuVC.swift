@@ -41,27 +41,27 @@ class SideMenuVC: UIViewController {
         }
     }
 
-    @IBAction func onTerritoryOptions(sender: AnyObject) {
+    @IBAction func onTerritoryOptions(_ sender: AnyObject) {
         sideMenuButtonPressed(notificationStrConst: Const.sideMenu.territories)
     }
     
-    @IBAction func onLoadOptions(sender: AnyObject) {
+    @IBAction func onLoadOptions(_ sender: AnyObject) {
         sideMenuButtonPressed(notificationStrConst: Const.sideMenu.loadOptions)
     }
     
-    @IBAction func onShareAppList(sender: AnyObject) {
+    @IBAction func onShareAppList(_ sender: AnyObject) {
         sideMenuButtonPressed(notificationStrConst: Const.sideMenu.share)
     }
     
-    @IBAction func onAddAppReview(sender: AnyObject) {
+    @IBAction func onAddAppReview(_ sender: AnyObject) {
         sideMenuButtonPressed(notificationStrConst: Const.sideMenu.askReview)
     }
     
-    @IBAction func onHelp(sender: AnyObject) {
+    @IBAction func onHelp(_ sender: AnyObject) {
         sideMenuButtonPressed(notificationStrConst: Const.sideMenu.help)
     }
     
-    @IBAction func onAbout(sender: AnyObject) {
+    @IBAction func onAbout(_ sender: AnyObject) {
         sideMenuButtonPressed(notificationStrConst: Const.sideMenu.about)
     }
 }

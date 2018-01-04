@@ -31,7 +31,7 @@ class CountrySelectCell: UITableViewCell {
         }
     }
     
-    @IBAction func onSwitchPressed(control: UISwitch) {
+    @IBAction func onSwitchPressed(_ control: UISwitch) {
         if control.isOn {
             model?.isSelected = true
         }

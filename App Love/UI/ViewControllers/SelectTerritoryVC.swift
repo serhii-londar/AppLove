@@ -25,7 +25,7 @@ class SelectTerritoryVC: UITableViewController {
         TerritoryMgr.sharedInst.updateFromTableState(tableState: self.countries)
     }
     
-    @IBAction func onToggleSelectAll(sender: UIBarButtonItem) {
+    @IBAction func onToggleSelectAll(_ sender: UIBarButtonItem) {
         if sender.title == "ALL" {
             sender.title = "CLEAR"
             selectAll() // toggle
@@ -49,11 +49,11 @@ class SelectTerritoryVC: UITableViewController {
         }
     }
     
-    @IBAction func onDefaultTerritories(button: UIBarButtonItem) {
+    @IBAction func onDefaultTerritories(_ button: UIBarButtonItem) {
         useDefaultTeritoriesActionSheet(button: button)
     }
     
-    @IBAction func onSaveAsDefault(button: UIBarButtonItem) {
+    @IBAction func onSaveAsDefault(_ button: UIBarButtonItem) {
         saveDefaultTeritoriesActionSheet(button: button)
     }
 }

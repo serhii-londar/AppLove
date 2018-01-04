@@ -38,7 +38,7 @@ class AppSelectCell: UITableViewCell {
         }
     }
     
-    @IBAction func onSwitchPressed(control: UISwitch) {
+    @IBAction func onSwitchPressed(_ control: UISwitch) {
         if let model = self.appModel {
             if control.isOn {
                 SearchList.sharedInst.addAppModel(model: model)

@@ -77,18 +77,18 @@ class ReviewListVC: UIViewController {
         NotificationCenter.post(aName: Const.load.orientationChange)
     }
     
-    @IBAction func onSort(sender: UIBarButtonItem) {
+    @IBAction func onSort(_ sender: UIBarButtonItem) {
         displaySortActionSheet(sender: sender)
     }
     
-    @IBAction func onAppStore(sender: AnyObject) {
+    @IBAction func onAppStore(_ sender: AnyObject) {
         // show loading indicator.
         if let appId = AppList.sharedInst.getSelectedModel()?.appId {
             showStore(id: appId)
         }
     }
     
-    @IBAction func onRemoveEmptyTerritories(button: UIBarButtonItem) {
+    @IBAction func onRemoveEmptyTerritories(_ button: UIBarButtonItem) {
         removeEmptyTerritories(button: button)
     }
     

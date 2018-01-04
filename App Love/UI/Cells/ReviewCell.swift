@@ -90,7 +90,7 @@ class ReviewCell: UITableViewCell {
         stars.removeAll()
     }
     
-    @IBAction func onReviewButton(button: UIButton) {
+    @IBAction func onReviewButton(_ button: UIButton) {
         if let modelData = self.model {
             let data:[String:AnyObject] = ["reviewModel":modelData, "button":button]
             let nc = NotificationCenter.default
