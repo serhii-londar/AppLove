@@ -136,7 +136,6 @@
 		0CE288FA1CB32022008A309A /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		0CE289121CB578B4008A309A /* LoadReviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadReviews.swift; sourceTree = "<group>"; };
 		0CE289161CB59F3E008A309A /* ReviewParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewParser.swift; sourceTree = "<group>"; };
-		0CE289211CB5A294008A309A /* SWXMLHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWXMLHash.swift; sourceTree = "<group>"; };
 		2C78E9567753C7C680D1E646 /* Pods-App Love.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App Love.release.xcconfig"; path = "Pods/Target Support Files/Pods-App Love/Pods-App Love.release.xcconfig"; sourceTree = "<group>"; };
 		7355BF2CAB7FC52B0A5A83AC /* Pods_App_Love.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Love.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A76BCD08019B2EF573D098A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -374,7 +373,6 @@
 			children = (
 				0CDF4E301D0A032500CE1622 /* ElasticModalViewController.swift */,
 				0CDF4E2C1D09DADC00CE1622 /* HamburgerButton.swift */,
-				0CE289211CB5A294008A309A /* SWXMLHash.swift */,
 				0C979D411D66474600FFC49E /* String+truncate.swift */,
 			);
 			path = ThirdParty;

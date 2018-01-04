@@ -10,9 +10,7 @@ import UIKit
 import MessageUI
 
 class AppListEmail: NSObject {
-
     class func generateAppList() -> MFMailComposeViewController {
-        
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.setSubject("App Links")
         let appModels = AppList.sharedInst.appModels
