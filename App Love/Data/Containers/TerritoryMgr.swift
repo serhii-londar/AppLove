@@ -13,8 +13,8 @@ import UIKit
 class TerritoryMgr: NSObject {
 
     static let sharedInst = TerritoryMgr()
-    private var modelDictionary = [String:CountryModel]()
-    private var defaultTerritories = [String]()
+    var modelDictionary = [String:CountryModel]()
+    var defaultTerritories = [String]()
     
     private override init() { // enforce singleton
         super.init()
@@ -53,7 +53,7 @@ class TerritoryMgr: NSObject {
     // for table
     func getArrayOfModels() -> [CountryModel] {
         var array = Array(modelDictionary.values)
-        array.sortInPlace({ $0.country < $1.country })
+        array.sorted(by: { $0.country! < $1.country! })
         return array
     }
     
@@ -122,9 +122,8 @@ extension TerritoryMgr {
     }
     
     func getFilePath() -> String? {
-        if let documentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first,
-            let pathWithFileName = documentsDirectory.URLByAppendingPathComponent("defaultTerritories").path {
-            return pathWithFileName
+        if let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first {
+            return documentsDirectory.appendingPathComponent("defaultTerritories").path
         }
         return nil
     }
@@ -142,7 +141,7 @@ extension TerritoryMgr {
     
     func load() -> Bool {
         if let pathWithFileName = getFilePath(),
-            let loadedDefaults = NSKeyedUnarchiver.unarchiveObjectWithFile(pathWithFileName) as? [String] {
+            let loadedDefaults = NSKeyedUnarchiver.unarchiveObject(withFile: pathWithFileName) as? [String] {
             defaultTerritories = loadedDefaults
             return true
         }

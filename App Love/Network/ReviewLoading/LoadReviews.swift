@@ -11,7 +11,7 @@
 import UIKit
 
 class LoadReviews: NSObject {
-    var task:NSURLSessionDataTask?
+    var task:URLSessionDataTask?
     
     func cancel() {
         if let _ = self.task {
@@ -25,33 +25,33 @@ class LoadReviews: NSObject {
         return url
     }
     
-    func loadAppReviews(pageInfo:PageInfo, completion: (_ reviews:[ReviewModel]?,_ succeeded: Bool, _ error:NSError?, _ maxPages:Int) -> Void) {
+    func loadAppReviews(pageInfo:PageInfo, completion: @escaping (_ reviews:[ReviewModel]?,_ succeeded: Bool, _ error:NSError?, _ maxPages:Int) -> Void) {
         
-        let url = getPageUrl(pageInfo)
+        let url = getPageUrl(pageInfo: pageInfo)
         
-        if let reviews = CacheManager.sharedInst.getReviewsFromCache(url) {
-            completion(reviews: reviews, succeeded: true , error: nil,maxPages: 10)
+        if let reviews = CacheManager.sharedInst.getReviewsFromCache(url: url) {
+            completion(reviews, true , nil,10)
         }
         else {
-            guard let nsurl = NSURL(string: url) else { return }
+            guard let nsurl = URL(string: url) else { return }
             
-            let task = NSURLSession.sharedSession().dataTaskWithURL(nsurl, completionHandler: { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: nsurl, completionHandler: { (data, response, error) in
                 
-                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode,
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode,
                     let data = data else {
-                        completion(reviews: nil, succeeded: false , error: error, maxPages: 0)
+                        completion(nil, false , error as! NSError, 0)
                         return
                 }
                 
                 let allGood = (error == nil && statusCode == 200) // 403 means server blocked.
                 
                 if allGood {
-                    let reviewsArray = ReviewParser(pageInfo: pageInfo).createModels(data)
-                    CacheManager.sharedInst.addReviewsToCache(reviewsArray, url:url)
-                    completion(reviews: reviewsArray, succeeded: true , error: nil,maxPages: 10)
+                    let reviewsArray = ReviewParser(pageInfo: pageInfo).createModels(data: data as NSData)
+                    CacheManager.sharedInst.addReviewsToCache(reviews: reviewsArray, url:url)
+                    completion(reviewsArray, true , nil,10)
                 }
                 else {
-                    completion(reviews: nil, succeeded: false , error: error, maxPages: 0)
+                    completion(nil, false , error as! NSError, 0)
                 }
             })
             task.resume()

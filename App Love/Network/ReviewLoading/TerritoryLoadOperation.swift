@@ -21,7 +21,7 @@ protocol ProgressDelegate : class {
 
 class TerritoryLoadOperation: Operation {
 
-    let semaphore:dispatch_semaphore_t = dispatch_semaphore_create(0)
+    let semaphore = DispatchSemaphore(value: 0)
     weak var delegate:ProgressDelegate?
     var finishedOperation = false
     var loader:LoadReviews?
@@ -33,15 +33,15 @@ class TerritoryLoadOperation: Operation {
     }
 
     override func main() {
-        if cancelled {
-            dispatch_semaphore_signal(self.semaphore)
+        if isCancelled {
+            self.semaphore.signal()
             return
         }
         
-        self.delegate?.territoryLoadStarted(self.pageInfo.territory)
+        self.delegate?.territoryLoadStarted(country: self.pageInfo.territory)
         doNextPageLoad() // star recursive process.
 
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER) // wait for signal
+        semaphore.wait()
     }
     
     override func cancel() {
@@ -52,11 +52,11 @@ class TerritoryLoadOperation: Operation {
         guard finishedOperation == false else { return }
 
         finishedOperation = true
-        self.delegate?.territoryLoadCompleted(self.pageInfo.territory)
+        self.delegate?.territoryLoadCompleted(country: self.pageInfo.territory)
         if let loader = self.loader {
             loader.cancel()
         }
-        dispatch_semaphore_signal(self.semaphore)
+        self.semaphore.signal()
     }
     
     func doNextPageLoad() {
@@ -65,7 +65,7 @@ class TerritoryLoadOperation: Operation {
         self.loader = LoadReviews()
         self.pageInfo.page += 1
         
-        loader!.loadAppReviews(pageInfo) {
+        loader!.loadAppReviews(pageInfo: pageInfo) {
             (reviews, succeeded, error, maxPages) -> Void in
             
             guard self.finishedOperation == false else { return }
@@ -75,7 +75,7 @@ class TerritoryLoadOperation: Operation {
                     print("\(self.pageInfo.territory) failed json, tring again with xml url")
                     self.pageInfo.page -= 1
                     if let delegate = self.delegate  {
-                        delegate.pageLoaded(self.pageInfo.territory, reviews: nil)
+                        delegate.pageLoaded(country: self.pageInfo.territory, reviews: nil)
                     }
                     self.pageInfo.preferJSON = false
                     self.doNextPageLoad()
@@ -89,13 +89,13 @@ class TerritoryLoadOperation: Operation {
             else
             {
                 if let delegate = self.delegate  {
-                    delegate.pageLoaded(self.pageInfo.territory, reviews: reviews)
+                    delegate.pageLoaded(country: self.pageInfo.territory, reviews: reviews)
                 }
             }
             
             // check if there are multiple versions loaded so far. If so stop loading.
             if Defaults.getLoadAllBool() == false {
-                if self.multipleVersionsLoaded(reviews) {
+                if self.multipleVersionsLoaded(reviews: reviews) {
                     self.finishOperation()
                     return;
                 }

@@ -39,20 +39,20 @@ class MenuButton: UIControl {
         
         let centerY = self.frame.size.height/2
         self.icon.center = CGPoint(x:icon.center.x, y:centerY)
-        swiftyGlyphs.label.textColor = UIColor.whiteColor()
+        swiftyGlyphs.label.textColor = UIColor.white
         swiftyGlyphs.text = self.buttonText
-        swiftyGlyphs.setLocation(self, pos: CGPoint(x:0,y:0))
-        swiftyGlyphs.layout(CGPoint(x:45,y:centerY))
+        swiftyGlyphs.setLocation(view: self, pos: CGPoint(x:0,y:0))
+        swiftyGlyphs.layout(position: CGPoint(x:45,y:centerY))
     }
     
     // slide+scale from left to complement other animations.
     func animateIcon() {
         let endPos = icon.center
         icon.center = CGPoint(x: endPos.x-20,y: endPos.y)
-        icon.transform = CGAffineTransformMakeScale(0.5,0.5)
-        UIView.animateWithDuration(0.8, delay:0.2, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
-                                   options: [.CurveEaseOut], animations: {
-                                    self.icon.transform = CGAffineTransformMakeScale(1.0,1.0)
+        icon.transform = CGAffineTransform(scaleX: 0.5,y: 0.5)
+        UIView.animate(withDuration: 0.8, delay:0.2, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
+                       options: [.curveEaseOut], animations: {
+                        self.icon.transform = CGAffineTransform(scaleX: 1.0,y: 1.0)
                                     self.icon.center = endPos
         }, completion: nil)
     }
@@ -63,38 +63,38 @@ class MenuButton: UIControl {
         var cascadeDelay = 0.0
         for glyph in swiftyGlyphs.getGlyphs() {
             
-            glyph.imgView.transform = CGAffineTransformMakeRotation(-2.0)
+            glyph.imgView.transform = CGAffineTransform(rotationAngle: -2.0)
             glyph.imgView.center = CGPoint(x:glyph.position.x-50,y:glyph.position.y)
 
-            UIView.animateWithDuration(0.8, delay:0.1+cascadeDelay, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
-                                                   options: [.CurveEaseOut], animations: {
+            UIView.animate(withDuration: 0.8, delay:0.1+cascadeDelay, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
+                           options: [.curveEaseOut], animations: {
                     glyph.imgView.center = CGPoint(x:glyph.position.x,y:glyph.position.y)
              }, completion: { (completed) in
             })
             
-            UIView.animateWithDuration(0.8, delay:0.2+cascadeDelay*2, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
-                                       options: [.CurveEaseOut], animations: {
-                                        glyph.imgView.transform = CGAffineTransformMakeRotation(0.0)
+            UIView.animate(withDuration: 0.8, delay:0.2+cascadeDelay*2, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
+                           options: [.curveEaseOut], animations: {
+                            glyph.imgView.transform = CGAffineTransform(rotationAngle: 0.0)
                 }, completion: nil)
             cascadeDelay += 0.02
         }
     }
     
     // bounce icon big
-    func doPressAnimation(completion: () -> Void) {
-        icon.transform = CGAffineTransformMakeScale(0.8,0.8)
-        UIView.animateWithDuration(0.5, delay:0, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
-                                   options: [.CurveEaseOut], animations: {
-                                    self.icon.transform = CGAffineTransformMakeScale(1.3,1.3)
+    func doPressAnimation(completion: @escaping () -> Void) {
+        icon.transform = CGAffineTransform(scaleX: 0.8,y: 0.8)
+        UIView.animate(withDuration: 0.5, delay:0, usingSpringWithDamping:0.5, initialSpringVelocity: 0.5,
+                       options: [.curveEaseOut], animations: {
+                        self.icon.transform = CGAffineTransform(scaleX: 1.3,y: 1.3)
             }, completion: { (completed) in
                 completion()
         })
     }
     
     // send action after press animation
-    override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
+    override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
         doPressAnimation {
-           super.sendAction(action, to: target, forEvent: event)
+            super.sendAction(action, to: target, for: event)
         }
     }
 }

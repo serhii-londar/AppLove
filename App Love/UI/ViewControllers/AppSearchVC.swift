@@ -20,21 +20,21 @@ class AppSearchVC: UITableViewController, UISearchBarDelegate {
         setTableStyle()
         searchBar.delegate = self
         searchBar.placeholder = "ie: App Name";
-        Theme.searchBar(searchBar)
+        Theme.searchBar(item: searchBar)
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
         let searchStr = searchBar.text
         
-        SearchApps.get(searchStr!) { (apps, succeeded, error) -> Void in
+        SearchApps.get(searchStr: searchStr!) { (apps, succeeded, error) -> Void in
 
             if let appsFound = apps {
                 self.apps = appsFound
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
-                })
+                }
             }
         }
     }

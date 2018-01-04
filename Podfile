@@ -8,4 +8,5 @@ target 'App Love' do
 	pod 'SDWebImage'
 	pod 'SwiftyGlyphs', :git => 'https://github.com/serhii-londar/SwiftyGlyphs.git'
 	pod 'ElasticTransition'
+    pod 'SWXMLHash'
 end

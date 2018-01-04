@@ -33,10 +33,10 @@ class ReviewEmail: NSObject {
         
         let appModel = AppList.sharedInst.getSelectedModel()
         var appName = appModel?.appName ?? ""
-        appName = appName.truncate(30)
+        appName = appName.truncate(length: 30)
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.setSubject("\(appName) Review")
-        var msgBody = ReviewEmail.getReviewMessageBody(reviewModel)
+        var msgBody = ReviewEmail.getReviewMessageBody(reviewModel: reviewModel)
         
         let appLovePlug = "<small><br><a href='https://itunes.apple.com/app/id\(Const.appId.AppLove)'>App Love</a></small>"
         msgBody += appLovePlug

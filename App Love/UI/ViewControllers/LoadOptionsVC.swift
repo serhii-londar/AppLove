@@ -33,20 +33,20 @@ class LoadOptionsVC: UIViewController, ElasticMenuTransitionDelegate {
     func initUI() {
         slider.maximumValue = 10
         slider.minimumValue = 1
-        loadVersionSwitch.on = Defaults.getLoadAllBool()
+        loadVersionSwitch.isOn = Defaults.getLoadAllBool()
         slider.value = Float(Defaults.getMaxPagesToLoadInt())
-        onSliderChanged(slider)
-        onSwitchChanged(loadVersionSwitch)
+        onSliderChanged(slider: slider)
+        onSwitchChanged(button: loadVersionSwitch)
     }
     
     @IBAction func onSwitchChanged(button: UISwitch) {
-        if button.on {
+        if button.isOn {
             switchLabel.text = "Load All Versions"
         }
         else {
             switchLabel.text = "Load only the latest Version"
         }
-        Defaults.setLoadAll(button.on)
+        Defaults.setLoadAll(loadAll: button.isOn)
     }
     
     @IBAction func onSliderChanged(slider: UISlider) {
@@ -55,17 +55,17 @@ class LoadOptionsVC: UIViewController, ElasticMenuTransitionDelegate {
     }
     
     @IBAction func onSliderTouchUpInside(sender: UISlider) {
-        snapSaveSlider(slider)
+        snapSaveSlider(slider: slider)
     }
     
     @IBAction func onSliderTouchUpOutside(slider: UISlider) {
-        snapSaveSlider(slider)
+        snapSaveSlider(slider: slider)
     }
     
     func snapSaveSlider(slider:UISlider) {
         let sliderIntValue = Int(round(slider.value))
         let snapValue = Float(sliderIntValue)
         slider.value = snapValue
-        Defaults.setMaxPagesToLoad(sliderIntValue)
+        Defaults.setMaxPagesToLoad(maxPages: sliderIntValue)
     }
 }

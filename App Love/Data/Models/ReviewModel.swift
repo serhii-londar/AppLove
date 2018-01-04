@@ -11,6 +11,7 @@
 
 import UIKit
 import SwiftyJSON
+import SWXMLHash
 
 class ReviewModel {
 

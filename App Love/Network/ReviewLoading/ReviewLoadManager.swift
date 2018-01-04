@@ -37,15 +37,15 @@ class ReviewLoadManager: NSObject, ProgressDelegate {
         clearReviews()
         initializeLoadingStates()
         self.loadingQueue = nil
-        self.loadingQueue = NSOperationQueue()
+        self.loadingQueue = OperationQueue()
         self.loadingQueue?.maxConcurrentOperationCount = 4
         setNotifications()
-        NSNotificationCenter.post(Const.load.loadStart)
+        NotificationCenter.post(aName: Const.load.loadStart)
         
         let countryCodes = TerritoryMgr.sharedInst.getSelectedCountryCodes()
         
-        let allOperationsFinishedOperation = NSBlockOperation() {
-            NSNotificationCenter.post(Const.load.allLoadingCompleted)
+        let allOperationsFinishedOperation = BlockOperation() {
+            NotificationCenter.post(aName: Const.load.allLoadingCompleted)
         }
         
         if let appId = AppList.sharedInst.getSelectedModel()?.appId {
@@ -58,48 +58,48 @@ class ReviewLoadManager: NSObject, ProgressDelegate {
             }
         }
         
-        NSOperationQueue.mainQueue().addOperation(allOperationsFinishedOperation)
+        OperationQueue.main.addOperation(allOperationsFinishedOperation)
     }
     
     // ProgressDelegate - update bar territory
     func territoryLoadCompleted(country:String) {
         //print("territoryLoadCompleted "+country)
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let data:[String:AnyObject] = ["territory":country]
-            let nc = NSNotificationCenter.defaultCenter()
-            nc.postNotificationName(Const.load.territoryDone, object:nil, userInfo:data)
-        })
+        DispatchQueue.main.async {
+            let data:[String:AnyObject] = ["territory": country as AnyObject]
+            let nc = NotificationCenter.default
+            nc.post(name: NSNotification.Name(rawValue: Const.load.territoryDone), object: nil, userInfo: data)
+        }
     }
     
     // ProgressDelegate - update bar territory
     func territoryLoadStarted(country:String) {
         //print("territoryLoadStarted "+country)
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let data:[String:AnyObject] = ["territory":country]
-            let nc = NSNotificationCenter.defaultCenter()
-            nc.postNotificationName(Const.load.territoryStart, object:nil, userInfo:data)
-        })
+        DispatchQueue.main.async {
+            let data:[String:AnyObject] = ["territory":country as AnyObject]
+            let nc = NotificationCenter.default
+            nc.post(name: NSNotification.Name(rawValue: Const.load.territoryStart), object: nil, userInfo: data)
+        }
     }
     
     // ProgressDelegate - update bar territory
-    func pageLoaded(territory:String, reviews:[ReviewModel]?) {
+    func pageLoaded(country territory:String, reviews:[ReviewModel]?) {
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async {
             
             if reviews == nil {
                 if let loadState = self.loadStates[territory] {
                     loadState.error = true
                 }
-                let data:[String:AnyObject] = ["error":"error","territory":territory]
-                let nc = NSNotificationCenter.defaultCenter()
-                nc.postNotificationName(Const.load.dataError, object:nil, userInfo:data)
+                let data:[String:AnyObject] = ["error":"error" as AnyObject, "territory":territory as AnyObject]
+                let nc = NotificationCenter.default
+                nc.post(name: NSNotification.Name(rawValue: Const.load.dataError), object: nil, userInfo: data)
             }
             
             if let newReviews = reviews {
                 if newReviews.count > 0 {
-                    self.reviews.appendContentsOf(newReviews)
+                    self.reviews.append(contentsOf: newReviews)
                 }
                 
                 if let loadState = self.loadStates[territory] {
@@ -109,9 +109,10 @@ class ReviewLoadManager: NSObject, ProgressDelegate {
                 
                 if let loadState = self.loadStates[territory] {
                     loadState.error = false
-                    let data:[String:AnyObject] = ["loadState":loadState,"territory":territory]
-                    let nc = NSNotificationCenter.defaultCenter()
-                    nc.postNotificationName(Const.load.updateAmount, object:nil, userInfo:data)
+                    let data:[String:AnyObject] = ["loadState":loadState,"territory":territory as AnyObject]
+                    let nc = NotificationCenter.default
+                    
+                    nc.post(name: NSNotification.Name(rawValue: Const.load.updateAmount), object: nil, userInfo: data)
                 }
                 
                 // let the user read something while still loading, 
@@ -120,21 +121,21 @@ class ReviewLoadManager: NSObject, ProgressDelegate {
                     self.updateTable()
                 }
             }
-        })
+        }
     }
     
     func updateTable() {
-        NSNotificationCenter.post(Const.load.reloadData)
+        NotificationCenter.post(aName: Const.load.reloadData)
         self.firstQuickUpdate = true
     }
     
     func setNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-        NSNotificationCenter.addObserver(self, sel:.updateTableData, name: Const.load.allLoadingCompleted)
+        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.addObserver(observer: self, sel:.updateTableData, name: Const.load.allLoadingCompleted)
     }
     
     func updateTableData(notification: NSNotification) {
-        NSNotificationCenter.post(Const.load.reloadData)
+        NotificationCenter.post(aName: Const.load.reloadData)
     }
     
     func clearReviews() {
@@ -168,5 +169,5 @@ class ReviewLoadManager: NSObject, ProgressDelegate {
 }
 
 private extension Selector {
-    static let updateTableData = #selector(ReviewLoadManager.updateTableData(_:))
+    static let updateTableData = #selector(ReviewLoadManager.updateTableData(notification:))
 }

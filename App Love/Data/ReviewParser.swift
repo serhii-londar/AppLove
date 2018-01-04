@@ -11,6 +11,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SWXMLHash
 
 class ReviewParser: NSObject {
     
@@ -19,21 +20,21 @@ class ReviewParser: NSObject {
     
     init(pageInfo:PageInfo) {
         self.pageInfo = pageInfo
-        self.fullTerritoryName = TerritoryMgr.sharedInst.getTerritory(pageInfo.territory) ?? pageInfo.territory
+        self.fullTerritoryName = TerritoryMgr.sharedInst.getTerritory(code: pageInfo.territory) ?? pageInfo.territory
     }
     
-    func createModels(data:NSData) -> [ReviewModel] {
+    func createModels(data: NSData) -> [ReviewModel] {
         if self.pageInfo.preferJSON == true {
-            return createModelsFromJSON(data)
+            return createModelsFromJSON(data: data)
         }
-        return createModelsFromXML(data)
+        return createModelsFromXML(data: data)
     }
     
-    func createModelsFromXML(data:NSData) -> [ReviewModel] {
+    func createModelsFromXML(data: NSData) -> [ReviewModel] {
         var reviewsArray = [ReviewModel]()
-        let xml = SWXMLHash.parse(data)
+        let xml = SWXMLHash.parse(data as Data)
         let reviews = xml["feed"]["entry"]
-        for item in reviews {
+        for item in reviews.all {
             let review = ReviewModel(xml: item)
             if review.name != nil {
                 review.territory = fullTerritoryName
@@ -47,7 +48,7 @@ class ReviewParser: NSObject {
     func createModelsFromJSON(data:NSData) -> [ReviewModel] {
         var reviewsArray = [ReviewModel]()
         do {
-            let jsonResults = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
+            let jsonResults = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             let json = JSON(jsonResults)
             if let entryArray = json["feed"]["entry"].array {
                 for json in entryArray {

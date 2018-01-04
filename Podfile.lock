@@ -8,6 +8,7 @@ PODS:
   - SDWebImage/Core (4.2.3)
   - SwiftyGlyphs (2.0.0)
   - SwiftyJSON (4.0.0)
+  - SWXMLHash (4.2.5)
 
 DEPENDENCIES:
   - Alamofire
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - SDWebImage
   - SwiftyGlyphs (from `https://github.com/serhii-londar/SwiftyGlyphs.git`)
   - SwiftyJSON
+  - SWXMLHash
 
 EXTERNAL SOURCES:
   SwiftyGlyphs:
@@ -32,7 +34,8 @@ SPEC CHECKSUMS:
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
   SwiftyGlyphs: 8aaf059b2fa4ee9adb9982b642b86d411f519669
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SWXMLHash: eb16013c6f654853980822e0a778c9d66e017dde
 
-PODFILE CHECKSUM: 3d832498294468d67411f2b765aea2ff0cb6154d
+PODFILE CHECKSUM: 86857563ac8da32beee905b59643b8ebd6b3aa9a
 
 COCOAPODS: 1.3.1

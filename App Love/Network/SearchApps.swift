@@ -13,25 +13,27 @@ import SwiftyJSON
 
 class SearchApps {
     
-    class func get(searchStr:String, completion: (_ appsFound:[AppModel]?,_ succeeded: Bool, _ error:NSError?) -> Void) {
+    class func get(searchStr:String, completion: @escaping (_ appsFound:[AppModel]?,_ succeeded: Bool, _ error:NSError?) -> Void) {
         let array = searchStr.characters.split {$0 == " "}.map(String.init)
-        let searchTermsStr = array.joinWithSeparator("+").lowercaseString
+        let searchTermsStr = array.joined(separator: "+").lowercased()
         let url = "https://itunes.apple.com/search?term=\(searchTermsStr)&entity=software"
         
-        Alamofire.request(.GET, url).responseJSON { response in
+        Alamofire.request(url).responseJSON { response in
             switch response.result {
-            case .Success(let data):
+            case .success(_):
+                let data = response.value as! [String: AnyObject]
                 var apps = [AppModel]()
-                if let resultsArray = data["results"] as? [AnyObject] {
+                if let resultsArray = data["results"] as? [[String: AnyObject]] {
                     for resultsDic in resultsArray {
-                        let app = AppModel(resultsDic: resultsDic as! [String : AnyObject])
+                        let app = AppModel(resultsDic: resultsDic)
                         apps.append(app)
                     }
                 }
-                completion(appsFound: apps, succeeded: true , error: nil)
+                completion(apps, true , nil)
                 
-            case .Failure(let error):
-                completion(appsFound: nil, succeeded: false , error: error)
+            case .failure(let error):
+                completion(nil, false , error as NSError)
+                
             }
         }
     }

@@ -11,7 +11,7 @@
 import UIKit
 
 private extension Selector {
-    static let refresh = #selector(ReviewListVC.refresh(_:))
+    static let refresh = #selector(ReviewListVC.refresh(sender:))
 }
 
 extension ReviewListVC {
@@ -19,7 +19,7 @@ extension ReviewListVC {
     func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: .refresh, forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: .refresh, for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
     }
     

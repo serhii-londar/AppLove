@@ -13,7 +13,7 @@ class GlobalSplitVC: UISplitViewController, UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-        self.preferredDisplayMode = UISplitViewControllerDisplayMode.AllVisible
+        self.preferredDisplayMode = UISplitViewControllerDisplayMode.allVisible
     }
     
     func splitView(splitView: UISplitViewController, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
@@ -28,7 +28,7 @@ class GlobalSplitVC: UISplitViewController, UISplitViewControllerDelegate {
         self.delegate = self
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 }

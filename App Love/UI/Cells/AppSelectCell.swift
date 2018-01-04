@@ -21,7 +21,7 @@ class AppSelectCell: UITableViewCell {
     func setup(model:AppModel) {
         if let urlStr = model.icon100,
             let url =  NSURL(string:urlStr) {
-                iconImage.sd_setImageWithURL(url, placeholderImage: UIImage(named:"defaulticon"))
+            iconImage.sd_setImage(with: url as URL, placeholderImage: UIImage(named:"defaulticon"))
         }
         
         appModel = model
@@ -30,7 +30,7 @@ class AppSelectCell: UITableViewCell {
         appName.text = "Get Reviews"
         ratingsCountLabel.text = model.appName
         
-        if SearchList.sharedInst.hasItem(model) {
+        if SearchList.sharedInst.hasItem(model: model) {
             self.addSwitch.setOn(true, animated: false)
         }
         else {
@@ -40,11 +40,11 @@ class AppSelectCell: UITableViewCell {
     
     @IBAction func onSwitchPressed(control: UISwitch) {
         if let model = self.appModel {
-            if control.on {
-                SearchList.sharedInst.addAppModel(model)
+            if control.isOn {
+                SearchList.sharedInst.addAppModel(model: model)
             }
             else {
-                SearchList.sharedInst.removeAppModel(model)
+                SearchList.sharedInst.removeAppModel(model: model)
             }
         }
     }

@@ -543,7 +543,7 @@ public enum XMLIndexer: Sequence {
      */
     public subscript(index: Int) -> XMLIndexer {
         do {
-            return try byIndex(index)
+            return try byIndex(index: index)
         } catch let error as Error {
             return .XMLError(error)
         } catch {
@@ -558,7 +558,7 @@ public enum XMLIndexer: Sequence {
      
      - returns: an array of `XMLIndexer` instances
      */
-    public func generate() -> IndexingGenerator<[XMLIndexer]> {
+    public func generate() -> IndexingIterator<[XMLIndexer]> {
         return all.generate()
     }
 }
@@ -709,7 +709,7 @@ extension XMLElement: CustomStringConvertible {
             }
         }
         
-        var attributesString = attributesStringList.joinWithSeparator(" ")
+        var attributesString = attributesStringList.joined(separator: " ")
         if !attributesString.isEmpty {
             attributesString = " " + attributesString
         }
@@ -721,7 +721,7 @@ extension XMLElement: CustomStringConvertible {
                 xmlReturn.append(child.description)
             }
             xmlReturn.append("</\(name)>")
-            return xmlReturn.joinWithSeparator("")
+            return xmlReturn.joined(separator: "")
         }
         
         if text != nil {

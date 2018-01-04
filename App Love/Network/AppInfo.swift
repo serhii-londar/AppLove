@@ -12,22 +12,22 @@ import Alamofire
 
 class AppInfo {
 
-    class func get(appID:String, completion: (_ model:AppModel?,_ succeeded: Bool, _ error:NSError?) -> Void) {
+    class func get(appID:String, completion: @escaping (_ model:AppModel?,_ succeeded: Bool, _ error:NSError?) -> Void) {
         let url = "https://itunes.apple.com/lookup?id=\(appID)"
         
-        Alamofire.request(.GET, url).responseJSON { response in
+        Alamofire.request(url).responseJSON { response in
             switch response.result {
                 
-            case .Success(let data):
+            case .success(let data):
                 let rootDic = data as! [String : AnyObject]
                 if let resultsArray = rootDic["results"] as? [AnyObject],
                     let finalDic = resultsArray[0] as? [String: AnyObject] {
                         let appStoreModel = AppModel(resultsDic:finalDic)
-                        completion(model: appStoreModel, succeeded: true , error: nil)
+                    completion(appStoreModel, true , nil)
                 }
                 
-            case .Failure(let error):
-                completion(model: nil, succeeded: false , error: error)
+            case .failure(let error):
+                completion(nil, false , error as NSError)
             }
         }
     }

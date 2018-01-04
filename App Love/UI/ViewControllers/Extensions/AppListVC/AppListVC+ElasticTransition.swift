@@ -17,43 +17,43 @@ extension AppListVC {
         transition.damping = 0.40
         transition.stiffness = 1
         transition.damping = 0.75
-        transition.transformType = .TranslateMid
+        transition.transformType = .translateMid
     }
 
     func displayElasticOptions(viewControlerId:String) {
         if let storyboard = self.storyboard {
-            let aboutVC = storyboard.instantiateViewControllerWithIdentifier(viewControlerId)
-            aboutVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-            transition.edge = .Bottom
+            let aboutVC = storyboard.instantiateViewController(withIdentifier: viewControlerId)
+            aboutVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            transition.edge = .bottom
             transition.startingPoint = CGPoint(x:30,y:70)
             transition.stiffness = 1
             transition.damping = 0.75
             transition.showShadow = true
-            transition.transformType = .Rotate
+            transition.transformType = .rotate
             aboutVC.transitioningDelegate = transition
-            aboutVC.modalPresentationStyle = .Custom
-            presentViewController(aboutVC, animated: true, completion: nil)
+            aboutVC.modalPresentationStyle = .custom
+            present(aboutVC, animated: true, completion: nil)
         }
     }
 
     func elasticPresentViewController(storyBoardID:String) {
         if let storyboard = self.storyboard {
-            let aboutVC = storyboard.instantiateViewControllerWithIdentifier(storyBoardID)
-            transition.edge = .Right
+            let aboutVC = storyboard.instantiateViewController(withIdentifier: storyBoardID)
+            transition.edge = .right
             transition.startingPoint = CGPoint(x:30,y:70)
             transition.stiffness = 1
             transition.damping = 0.75
             aboutVC.transitioningDelegate = transition
-            aboutVC.modalPresentationStyle = .Custom
-            presentViewController(aboutVC, animated: true, completion: nil)
+            aboutVC.modalPresentationStyle = .custom
+            present(aboutVC, animated: true, completion: nil)
         }
     }
 
     func openElasticMenu() {
-        transition.edge = .Left
+        transition.edge = .left
         transition.startingPoint = CGPoint(x:30,y:70)
         transition.showShadow = false
-        transition.transformType = .TranslateMid
-        performSegueWithIdentifier("menu", sender: self)
+        transition.transformType = .translateMid
+        performSegue(withIdentifier: "menu", sender: self)
     }
 }

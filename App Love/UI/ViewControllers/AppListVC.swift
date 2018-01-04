@@ -31,15 +31,15 @@ class AppListVC: UIViewController {
         addMenuObservers()
         
         if let toolbar = self.navigationController?.toolbar {
-            Theme.toolBar(toolbar)
+            Theme.toolBar(item: toolbar)
         }
         
-        self.splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.Automatic
+        self.splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
     }
     
     func addObservers() {
-        NSNotificationCenter.addObserver(self, sel: .onMenuOpen, name: Const.sideMenu.openMenu)
-        NSNotificationCenter.addObserver(self, sel: .onMenuClose, name: Const.sideMenu.closeMenu)
+        NotificationCenter.addObserver(observer: self, sel: .onMenuOpen, name: Const.sideMenu.openMenu)
+        NotificationCenter.addObserver(observer: self, sel: .onMenuClose, name: Const.sideMenu.closeMenu)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +51,7 @@ class AppListVC: UIViewController {
         if hamburgerButton.showsMenu == false {
             hamburgerButton.showsMenu = true
         }
-        self.navigationController?.toolbarHidden = false
+        self.navigationController?.isToolbarHidden = false
     }
     
     
@@ -61,20 +61,20 @@ class AppListVC: UIViewController {
         let defaultAppIds = [Const.appId.MusketSmoke, Const.appId.AppLove]
         
         for appId:Int in defaultAppIds {
-            AppInfo.get(String(appId)) { (model, succeeded, error) -> Void in
+            AppInfo.get(appID: String(appId)) { (model, succeeded, error) -> Void in
                 
                 // add an app model
                 if let appModel = model {
-                    AppList.sharedInst.addAppModel(appModel)
+                    AppList.sharedInst.addAppModel(model: appModel)
                 }
                 
                 let finishedLoading = (defaultAppIds.count == AppList.sharedInst.appModels.count)
                 if (finishedLoading)
                 {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async {
                         AppList.sharedInst.save()
                         self.tableView.reloadData()
-                    })
+                    }
                 }
             }
         }
@@ -97,21 +97,21 @@ class AppListVC: UIViewController {
     
     func addAppsSelectedFromSearchResults() {
         let newApps = SearchList.sharedInst.getArray()
-        AppList.sharedInst.appModels.appendContentsOf(newApps)
+        AppList.sharedInst.appModels.append(contentsOf: newApps)
         SearchList.sharedInst.removeAll()
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async {
             AppList.sharedInst.save()
             self.tableView.reloadData()
-        })
+        }
     }
     
     @IBAction func onSearch(sender: AnyObject) {
-        performSegueWithIdentifier("AppSearch", sender: nil)
+        performSegue(withIdentifier: "AppSearch", sender: nil)
     }
     
     @IBAction func editMode(sender: UIBarButtonItem) {
-        if (self.tableView.editing) {
+        if (self.tableView.isEditing) {
             sender.title = "Edit"
             self.tableView.setEditing(false, animated: true)
         } else {
@@ -121,24 +121,24 @@ class AppListVC: UIViewController {
     }
     
     func addSplitViewCollapseButton(segue:UIStoryboardSegue) {
-        var destination = segue.destinationViewController
+        var destination = segue.destination
         if let nc = destination as? UINavigationController,
             let visibleVC = nc.visibleViewController {
             destination = visibleVC
             destination.navigationItem.leftBarButtonItem =
-                self.splitViewController?.displayModeButtonItem()
+                self.splitViewController?.displayModeButtonItem
             destination.navigationItem.leftItemsSupplementBackButton = true
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailReviews" {
-            addSplitViewCollapseButton(segue)
+            addSplitViewCollapseButton(segue: segue)
             return
         }
         
-        let vc = segue.destinationViewController
+        let vc = segue.destination
         vc.transitioningDelegate = transition
-        vc.modalPresentationStyle = .Custom
+        vc.modalPresentationStyle = .custom
     }
 }

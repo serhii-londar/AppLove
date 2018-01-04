@@ -20,8 +20,8 @@ class AppCell: UITableViewCell {
     
     func setup(model:AppModel) {
         if let urlStr = model.icon100,
-            let url =  NSURL(string:urlStr) {
-                appIconImgView.sd_setImageWithURL(url, placeholderImage: UIImage(named:"defaulticon"))
+            let url =  URL(string:urlStr) {
+            appIconImgView.sd_setImage(with: url, placeholderImage: UIImage(named:"defaulticon"))
         }
         
         // changes here are in flux as Apple decides what is ok.

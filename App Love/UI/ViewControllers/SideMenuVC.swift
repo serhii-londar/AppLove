@@ -32,44 +32,44 @@ class SideMenuVC: UIViewController {
     }
 
     func onMenuClose() {
-        self.dismissViewControllerAnimated(true, completion:nil)
+        self.dismiss(animated: true, completion:nil)
     }
     
     func sideMenuButtonPressed(notificationStrConst:String) {
-        self.dismissViewControllerAnimated(true) {
-            NSNotificationCenter.post(notificationStrConst)
+        self.dismiss(animated: true) {
+            NotificationCenter.post(aName: notificationStrConst)
         }
     }
 
     @IBAction func onTerritoryOptions(sender: AnyObject) {
-        sideMenuButtonPressed(Const.sideMenu.territories)
+        sideMenuButtonPressed(notificationStrConst: Const.sideMenu.territories)
     }
     
     @IBAction func onLoadOptions(sender: AnyObject) {
-        sideMenuButtonPressed(Const.sideMenu.loadOptions)
+        sideMenuButtonPressed(notificationStrConst: Const.sideMenu.loadOptions)
     }
     
     @IBAction func onShareAppList(sender: AnyObject) {
-        sideMenuButtonPressed(Const.sideMenu.share)
+        sideMenuButtonPressed(notificationStrConst: Const.sideMenu.share)
     }
     
     @IBAction func onAddAppReview(sender: AnyObject) {
-        sideMenuButtonPressed(Const.sideMenu.askReview)
+        sideMenuButtonPressed(notificationStrConst: Const.sideMenu.askReview)
     }
     
     @IBAction func onHelp(sender: AnyObject) {
-        sideMenuButtonPressed(Const.sideMenu.help)
+        sideMenuButtonPressed(notificationStrConst: Const.sideMenu.help)
     }
     
     @IBAction func onAbout(sender: AnyObject) {
-        sideMenuButtonPressed(Const.sideMenu.about)
+        sideMenuButtonPressed(notificationStrConst: Const.sideMenu.about)
     }
 }
 
 extension SideMenuVC: ElasticMenuTransitionDelegate {
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.post(Const.sideMenu.closeMenu) // makes menu button morph back from arrow
+        NotificationCenter.post(aName: Const.sideMenu.closeMenu) // makes menu button morph back from arrow
     }
 }

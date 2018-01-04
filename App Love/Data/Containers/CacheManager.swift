@@ -18,32 +18,32 @@ class CacheManager {
     static let sharedInst = CacheManager()       
     private init() {} // enforce singleton
     
-    var cache:NSCache = NSCache()
+//    var cache:NSCache = NSCache()
     var ignore:Bool = false
     
     func addReviewsToCache(reviews:[ReviewModel], url:String) {
-        let datedReviews = ExpireableReviews(reviews: reviews, date: NSDate())
-        let urlKey = getUrlKey(url)
-        cache.setObject(datedReviews, forKey: urlKey)
+//        let datedReviews = ExpireableReviews(reviews: reviews, date: NSDate())
+//        let urlKey = getUrlKey(url: url)
+//        cache.setObject(datedReviews, forKey: urlKey)
     }
     
     func getReviewsFromCache(url:String) -> [ReviewModel]? {
-        guard ignore == false else { return nil }
+//        guard ignore == false else { return nil }
         
-        let urlKey = getUrlKey(url)
-        if let cachedReviews = cache.objectForKey(urlKey) as? ExpireableReviews {
-            
-            if cachedReviews.isExpired() {
-                cache.removeObjectForKey(url)
-                return nil
-            }
-            
-            if cachedReviews.reviews.count == 0 {
-                return nil
-            }
-            
-            return cachedReviews.reviews
-        }
+//        let urlKey = getUrlKey(url: url)
+//        if let cachedReviews = cache.objectForKey(urlKey) as? ExpireableReviews {
+//
+//            if cachedReviews.isExpired() {
+//                cache.removeObjectForKey(url)
+//                return nil
+//            }
+//
+//            if cachedReviews.reviews.count == 0 {
+//                return nil
+//            }
+//
+//            return cachedReviews.reviews
+//        }
         return nil
     }
     
@@ -51,12 +51,12 @@ class CacheManager {
     // url is the same except for the last few characters ('json' or 'xml') so that 
     // part is stripped.
     func getUrlKey(url:String) -> String {
-        if url.containsString("json") {
-            let newstr = url.stringByReplacingOccurrencesOfString("json", withString:"")
+        if url.contains("json") {
+            let newstr = url.replacingOccurrences(of: "json", with:"")
             return newstr
         }
-        if url.containsString("xml") {
-            let newstr = url.stringByReplacingOccurrencesOfString("xml", withString:"")
+        if url.contains("xml") {
+            let newstr = url.replacingOccurrences(of: "xml", with: "")
             return newstr
         }
         return url

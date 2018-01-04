@@ -36,7 +36,7 @@ class ReviewListVC: UIViewController {
         registerTerritoryNotificationsForLoader()
         
         if let toolbar = self.navigationController?.toolbar {
-            Theme.toolBar(toolbar)
+            Theme.toolBar(item: toolbar)
         }
     }
     
@@ -61,35 +61,35 @@ class ReviewListVC: UIViewController {
         guard let dic = notification.userInfo else { return }
         guard let model = dic["reviewModel"] as? ReviewModel else { return }
         guard let button = dic["button"] as? UIButton else { return }
-        displayReviewOptions(model, button:button)
+        displayReviewOptions(model: model, button:button)
     }
     
     func registerNotifications() {
-        NSNotificationCenter.addObserver(self, sel: .reloadData, name: Const.load.reloadData)
-        NSNotificationCenter.addObserver(self,sel: .onReviewOptions, name: Const.reviewOptions.showOptions)
+        NotificationCenter.addObserver(observer: self, sel: .reloadData, name: Const.load.reloadData)
+        NotificationCenter.addObserver(observer: self,sel: .onReviewOptions, name: Const.reviewOptions.showOptions)
     }
     
     func unregisterNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        NSNotificationCenter.post(Const.load.orientationChange)
+        NotificationCenter.post(aName: Const.load.orientationChange)
     }
     
     @IBAction func onSort(sender: UIBarButtonItem) {
-        displaySortActionSheet(sender)
+        displaySortActionSheet(sender: sender)
     }
     
     @IBAction func onAppStore(sender: AnyObject) {
         // show loading indicator.
         if let appId = AppList.sharedInst.getSelectedModel()?.appId {
-            showStore(appId)
+            showStore(id: appId)
         }
     }
     
     @IBAction func onRemoveEmptyTerritories(button: UIBarButtonItem) {
-        removeEmptyTerritories(button)
+        removeEmptyTerritories(button: button)
     }
     
     deinit {

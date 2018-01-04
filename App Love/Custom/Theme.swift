@@ -20,23 +20,23 @@ internal struct Theme {
 
     static func navigationBar() {
         let bar = UINavigationBar.appearance()
-        bar.tintColor = .whiteColor()
+        bar.tintColor = .white
         bar.barTintColor = Theme.defaultColor
-        bar.translucent = false
-        bar.barStyle = .Black
+        bar.isTranslucent = false
+        bar.barStyle = .black
     }
     
     static func mailBar(bar:UINavigationBar) {
-        bar.tintColor = .whiteColor()
+        bar.tintColor = .white
         bar.barTintColor = Theme.defaultColor
-        bar.translucent = false
-        bar.barStyle = .Black
+        bar.isTranslucent = false
+        bar.barStyle = .black
     }
 
     static func toolBar(item:UIToolbar) {
-        item.tintColor = .whiteColor()
+        item.tintColor = .white
         item.barTintColor = Theme.defaultColor
-        item.translucent = false
+        item.isTranslucent = false
     }
     
     static func alertController(item:UIAlertController) {

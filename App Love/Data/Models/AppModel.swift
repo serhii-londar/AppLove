@@ -31,20 +31,20 @@ class AppModel: NSObject, NSCoding{
     
     required init(coder decoder: NSCoder) {
         super.init()
-        appName = decoder.decodeObjectForKey("appName") as? String
-        companyName = decoder.decodeObjectForKey("companyName") as? String
-        icon100 = decoder.decodeObjectForKey("icon100") as? String
-        averageUserRating = decoder.decodeFloatForKey("averageUserRating") as Float
-        userRatingCount = decoder.decodeIntegerForKey("userRatingCount") as Int
-        appId = decoder.decodeIntegerForKey("appId") as Int
+        appName = decoder.decodeObject(forKey: "appName") as? String
+        companyName = decoder.decodeObject(forKey: "companyName") as? String
+        icon100 = decoder.decodeObject(forKey: "icon100") as? String
+        averageUserRating = decoder.decodeFloat(forKey: "averageUserRating") as Float
+        userRatingCount = decoder.decodeInteger(forKey: "userRatingCount") as Int
+        appId = decoder.decodeInteger(forKey: "appId") as Int
     }
-    
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(appName, forKey: "appName")
-        aCoder.encodeObject(companyName, forKey: "companyName")
-        aCoder.encodeObject(icon100, forKey: "icon100")
-        aCoder.encodeFloat(averageUserRating, forKey: "averageUserRating")
-        aCoder.encodeInteger(userRatingCount, forKey: "userRatingCount")
-        aCoder.encodeInteger(appId, forKey: "appId")
+
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(appName, forKey: "appName")
+        aCoder.encode(companyName, forKey: "companyName")
+        aCoder.encode(icon100, forKey: "icon100")
+        aCoder.encode(averageUserRating, forKey: "averageUserRating")
+        aCoder.encode(userRatingCount, forKey: "userRatingCount")
+        aCoder.encode(appId, forKey: "appId")
     }
 }

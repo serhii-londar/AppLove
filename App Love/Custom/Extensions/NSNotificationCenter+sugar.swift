@@ -12,10 +12,10 @@ import Foundation
 extension NotificationCenter {
     
     class func post (aName: String, object: AnyObject?=nil) {
-        NSNotificationCenter.defaultCenter().postNotificationName(aName, object: object)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: aName), object: object)
     }
 
     class func addObserver (observer: AnyObject, sel: Selector, name aName: String?, object anObject: AnyObject?=nil) {
-        NSNotificationCenter.defaultCenter().addObserver(observer, selector: sel, name: aName, object: anObject)
+        NotificationCenter.default.addObserver(observer, selector: sel, name: aName.map { NSNotification.Name(rawValue: $0) }, object: anObject)
     }
 }

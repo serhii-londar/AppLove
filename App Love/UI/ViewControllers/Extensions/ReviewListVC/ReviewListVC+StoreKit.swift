@@ -16,11 +16,11 @@ extension ReviewListVC: SKStoreProductViewControllerDelegate {
         let storeViewController = SKStoreProductViewController()
         storeViewController.delegate = self
         let parameters = [SKStoreProductParameterITunesItemIdentifier :
-            NSNumber(integer: id)]
-        storeViewController.loadProductWithParameters(parameters,
+            NSNumber(value: id)]
+        storeViewController.loadProduct(withParameters: parameters,
                                                       completionBlock: {result, error in
                                                         if result {
-                                                            self.presentViewController(storeViewController,
+                                                            self.present(storeViewController,
                                                                 animated: true, completion: nil)
                                                             // remove loading animation
                                                         }
@@ -28,6 +28,6 @@ extension ReviewListVC: SKStoreProductViewControllerDelegate {
     }
     
     func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
-        viewController.dismissViewControllerAnimated(true, completion: nil)
+        viewController.dismiss(animated: true, completion: nil)
     }
 }

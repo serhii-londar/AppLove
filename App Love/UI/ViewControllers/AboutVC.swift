@@ -25,7 +25,7 @@ class AboutVC: ElasticModalViewController {
     }
     
     func getVersion() -> String? {
-        if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             return version
         }
         return nil
@@ -34,13 +34,13 @@ class AboutVC: ElasticModalViewController {
     func populateText() {
         let aboutText = "\nLet me know what you think of this app!\n\nCheers,\nWoodie Dovich\n\n"
         
-        textView.backgroundColor = .clearColor()
+        textView.backgroundColor = .clear
         textView.text = aboutText
-        textView.userInteractionEnabled = false
-        textView.selectable = false
+        textView.isUserInteractionEnabled = false
+        textView.isSelectable = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         populateText()
         showAnimatedVersion()
@@ -54,13 +54,13 @@ class AboutVC: ElasticModalViewController {
         
         if let glyphs = glyphSprites {
             glyphs.text = "Version "+version
-            glyphs.setLocation(skview, pos: CGPoint(x:0,y:30))
+            glyphs.setLocation(skview: skview, pos: CGPoint(x:0,y:30))
             glyphs.centerTextToView()
-            AboutAnimation().startAnimation(glyphs)
+            AboutAnimation().startAnimation(glyphSprites: glyphs)
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -11,7 +11,6 @@
 import UIKit
 
 class CountrySelectCell: UITableViewCell {
-
     @IBOutlet weak var territoryFlagImage: UIImageView!
     @IBOutlet weak var addSwitch: UISwitch!
     @IBOutlet weak var countryLabel: UILabel!
@@ -33,7 +32,7 @@ class CountrySelectCell: UITableViewCell {
     }
     
     @IBAction func onSwitchPressed(control: UISwitch) {
-        if control.on {
+        if control.isOn {
             model?.isSelected = true
         }
         else {

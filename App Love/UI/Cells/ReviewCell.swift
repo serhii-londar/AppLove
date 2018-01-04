@@ -36,7 +36,7 @@ class ReviewCell: UITableViewCell {
                 let ratingNumber = Int(rating) ?? 1
                 let str = "\(territory) v\(version) \(name)"
                 self.authorLabel.text = str
-                self.addStars(ratingNumber)
+            self.addStars(rating: ratingNumber)
         }
         else {
             authorLabel.text = ""
@@ -59,7 +59,7 @@ class ReviewCell: UITableViewCell {
     func addStars(rating:Int) {
         var xpos:CGFloat = 13.0
         for _ in 1...rating {
-             addStar(xpos)
+            addStar(pos: xpos)
             xpos += 13
         }
     }
@@ -93,8 +93,8 @@ class ReviewCell: UITableViewCell {
     @IBAction func onReviewButton(button: UIButton) {
         if let modelData = self.model {
             let data:[String:AnyObject] = ["reviewModel":modelData, "button":button]
-            let nc = NSNotificationCenter.defaultCenter()
-            nc.postNotificationName(Const.reviewOptions.showOptions, object:nil, userInfo:data)
+            let nc = NotificationCenter.default
+            nc.post(name: NSNotification.Name(rawValue: Const.reviewOptions.showOptions), object: nil, userInfo: data)
         }
     }
     

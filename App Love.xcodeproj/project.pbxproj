@@ -69,7 +69,6 @@
 		0CE288FB1CB32022008A309A /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE288FA1CB32022008A309A /* Const.swift */; };
 		0CE289131CB578B4008A309A /* LoadReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE289121CB578B4008A309A /* LoadReviews.swift */; };
 		0CE289171CB59F3E008A309A /* ReviewParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE289161CB59F3E008A309A /* ReviewParser.swift */; };
-		0CE289221CB5A294008A309A /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE289211CB5A294008A309A /* SWXMLHash.swift */; };
 		F2A80DF04E78040DB8F16DF8 /* Pods_App_Love.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7355BF2CAB7FC52B0A5A83AC /* Pods_App_Love.framework */; };
 /* End PBXBuildFile section */
 
@@ -503,6 +502,7 @@
 				"${BUILT_PRODUCTS_DIR}/ElasticTransition/ElasticTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionAnimation/MotionAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGlyphs/SwiftyGlyphs.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -512,6 +512,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ElasticTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGlyphs.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -582,7 +583,6 @@
 				0C6D7EF21CAF2A5C008AD13B /* SearchList.swift in Sources */,
 				0C5CB8B91CCD910300B55450 /* HelpAnimation.swift in Sources */,
 				0C979D4A1D6676D300FFC49E /* AppListVC.swift in Sources */,
-				0CE289221CB5A294008A309A /* SWXMLHash.swift in Sources */,
 				0C6D7EF31CAF2A5C008AD13B /* TerritoryList.swift in Sources */,
 				0C979D7B1D6B877600FFC49E /* ReviewListVC+EmailReview.swift in Sources */,
 				0C979D5E1D66874300FFC49E /* SelectTerritoryVC.swift in Sources */,

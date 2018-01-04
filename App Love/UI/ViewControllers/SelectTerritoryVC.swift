@@ -22,7 +22,7 @@ class SelectTerritoryVC: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        TerritoryMgr.sharedInst.updateFromTableState(self.countries)
+        TerritoryMgr.sharedInst.updateFromTableState(tableState: self.countries)
     }
     
     @IBAction func onToggleSelectAll(sender: UIBarButtonItem) {
@@ -50,11 +50,11 @@ class SelectTerritoryVC: UITableViewController {
     }
     
     @IBAction func onDefaultTerritories(button: UIBarButtonItem) {
-        useDefaultTeritoriesActionSheet(button)
+        useDefaultTeritoriesActionSheet(button: button)
     }
     
     @IBAction func onSaveAsDefault(button: UIBarButtonItem) {
-         saveDefaultTeritoriesActionSheet(button)
+        saveDefaultTeritoriesActionSheet(button: button)
     }
 }
 
@@ -62,47 +62,47 @@ class SelectTerritoryVC: UITableViewController {
 extension SelectTerritoryVC {
     
     func saveDefaultTeritoriesActionSheet(button: UIBarButtonItem){
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let saveDefaultsAction = UIAlertAction(title: "Save Selected as Default", style: .Default) { action -> Void in
+        let saveDefaultsAction = UIAlertAction(title: "Save Selected as Default", style: .default) { action -> Void in
             TerritoryMgr.sharedInst.saveSelectedAsDefault()
         }
 
-        let actionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(saveDefaultsAction)
         alertController.addAction(actionCancel)
-        Theme.alertController(alertController)
+        Theme.alertController(item: alertController)
         if let popoverController = alertController.popoverPresentationController {
             popoverController.barButtonItem = button
         }
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func useDefaultTeritoriesActionSheet(button: UIBarButtonItem){
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let useDefaultsAction = UIAlertAction(title: "Use Saved Defaults", style: .Default) { action -> Void in
+        let useDefaultsAction = UIAlertAction(title: "Use Saved Defaults", style: .default) { action -> Void in
             self.clearAll()
             TerritoryMgr.sharedInst.setDefaultCountries()
             self.countries = TerritoryMgr.sharedInst.getArrayOfModels()
             self.tableView.reloadData()
         }
-        let useOriginalDefaultsAction = UIAlertAction(title: "Use Original Defaults", style: .Default) { action -> Void in
+        let useOriginalDefaultsAction = UIAlertAction(title: "Use Original Defaults", style: .default) { action -> Void in
             self.clearAll()
             TerritoryMgr.sharedInst.setOriginalDefaults()
             self.countries = TerritoryMgr.sharedInst.getArrayOfModels()
             self.tableView.reloadData()
         }
-        let actionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(useDefaultsAction)
         alertController.addAction(useOriginalDefaultsAction)
         alertController.addAction(actionCancel)
-        Theme.alertController(alertController)
+        Theme.alertController(item: alertController)
         if let popoverController = alertController.popoverPresentationController {
             popoverController.barButtonItem = button
         }
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

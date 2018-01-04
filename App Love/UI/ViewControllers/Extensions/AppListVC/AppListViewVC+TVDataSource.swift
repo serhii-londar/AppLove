@@ -14,49 +14,49 @@ extension AppListVC: UITableViewDataSource {
     
     func initTableView() {
         let nib = UINib(nibName: "AppCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "AppCellID")
+        self.tableView.register(nib, forCellReuseIdentifier: "AppCellID")
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 71
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorStyle = .none
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("AppCellID", forIndexPath: indexPath) as! AppCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AppCellID", for: indexPath ) as! AppCell
         let model = AppList.sharedInst.appModels[indexPath.row]
-        cell.setup(model)
+        cell.setup(model: model)
         return cell
     }
     
     // select row
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    func tableView(_ tableView: UITableView, willSelectRowAtIndexPath indexPath: IndexPath) -> IndexPath? {
         let item = AppList.sharedInst.appModels[indexPath.row]
-        AppList.sharedInst.setSelectedModel(item)
-        performSegueWithIdentifier("detailReviews", sender: self)
+        AppList.sharedInst.setSelectedModel(model: item)
+        performSegue(withIdentifier: "detailReviews", sender: self)
         return indexPath
     }
     
     // delete row
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle,forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,forRowAt indexPath: IndexPath) {
         switch editingStyle {
-        case .Delete:
-            AppList.sharedInst.appModels.removeAtIndex(indexPath.row)
+        case .delete:
+            AppList.sharedInst.appModels.remove(at: indexPath.row)
             AppList.sharedInst.save()
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
         default:
             return
         }
     }
     
     // move row
-    func tableView(tableView: UITableView,
-        moveRowAtIndexPath sourceIndexPath: NSIndexPath,
-        toIndexPath destinationIndexPath: NSIndexPath) {
-            let val = AppList.sharedInst.appModels.removeAtIndex(sourceIndexPath.row)
-            AppList.sharedInst.appModels.insert(val, atIndex: destinationIndexPath.row)
+    func tableView(_ tableView: UITableView,
+                   moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
+        let val = AppList.sharedInst.appModels.remove(at: sourceIndexPath.row)
+        AppList.sharedInst.appModels.insert(val, at: destinationIndexPath.row)
             AppList.sharedInst.save()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AppList.sharedInst.appModels.count;
     }
 }

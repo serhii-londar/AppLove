@@ -10,18 +10,17 @@ import UIKit
 import MessageUI
 
 extension ReviewListVC: MFMailComposeViewControllerDelegate {
-    
     func displayReviewEmail(model:ReviewModel) {
         if MFMailComposeViewController.canSendMail() {
-            let reviewMailComposerVC = ReviewEmail.generateSingleReviewEmail(model)
+            let reviewMailComposerVC = ReviewEmail.generateSingleReviewEmail(reviewModel: model)
             reviewMailComposerVC.mailComposeDelegate = self
-            Theme.mailBar(reviewMailComposerVC.navigationBar)
-            self.presentViewController(reviewMailComposerVC, animated: true, completion: nil)
+            Theme.mailBar(bar: reviewMailComposerVC.navigationBar)
+            self.present(reviewMailComposerVC, animated: true, completion: nil)
         }
     }
     
     // MARK: MFMailComposeViewControllerDelegate Method
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

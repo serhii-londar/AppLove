@@ -16,32 +16,32 @@ extension SelectTerritoryVC {
         self.tableView.allowsMultipleSelection = true;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("countryCell", forIndexPath: indexPath) as! CountrySelectCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: indexPath) as! CountrySelectCell
         let model = countries[indexPath.row]
-        cell.setup(model)
+        cell.setup(model: model)
         return cell
     }
     
     // add territory
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! CountrySelectCell
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! CountrySelectCell
         cell.addSwitch.setOn(true, animated: true)
         countries[indexPath.row].isSelected = true
     }
     
     // remove territory
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! CountrySelectCell
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! CountrySelectCell
         cell.addSwitch.setOn(false, animated: true)
         countries[indexPath.row].isSelected = false
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countries.count
     }
 }

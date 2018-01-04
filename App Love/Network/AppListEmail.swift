@@ -19,7 +19,7 @@ class AppListEmail: NSObject {
         var msgBody = "<small><b>Check out these Apps!</b><br></small>"
 
         for app in appModels {
-            let appName = truncateAppName(app.appName)
+            let appName = truncateAppName(originalAppName: app.appName)
             msgBody += "<small><a href='https://itunes.apple.com/app/id\(app.appId)'>\(appName)</a></small><br>"
         }
         
@@ -32,13 +32,13 @@ class AppListEmail: NSObject {
     
     // cut off app name at '-' dash, then limit to 30 characters for email.
     class func truncateAppName(originalAppName:String?) -> String {
-        let fullAppName = originalAppName ?? ""
-        let fullNameArray = fullAppName.characters.split("-").map{ String($0) }
-        var appName = fullNameArray.first ?? ""
-        if appName != fullAppName {
-            appName = appName + "..."
-        }
-        let truncatedAppName = appName.truncate(30)
-        return truncatedAppName
+//        let fullAppName = originalAppName ?? ""
+//        let fullNameArray = fullAppName.characters.split(separator: "-")//.map{ String($0) }
+//        var appName = fullNameArray.first ?? ""
+//        if appName != fullAppName {
+//            appName = appName + "..."
+//        }
+//        let truncatedAppName = appName.truncate(30)
+        return originalAppName ?? ""
     }
 }

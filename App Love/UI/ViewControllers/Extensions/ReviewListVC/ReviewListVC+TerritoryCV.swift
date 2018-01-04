@@ -31,16 +31,16 @@ extension ReviewListVC: UICollectionViewDataSource {
         territoryCollection.delegate = self
         territoryCollection.dataSource = self
         territoryCollection.bounces = true
-        territoryCollection.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
+        territoryCollection.autoresizingMask = [UIViewAutoresizing.flexibleHeight, UIViewAutoresizing.flexibleWidth]
         territoryCollection.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-        territoryCollection.registerClass(TerritoryLoadCell.self, forCellWithReuseIdentifier: "territoryLoadCell")
-        territoryCollection.registerNib(UINib(nibName: "TerritoryLoadCell", bundle: nil), forCellWithReuseIdentifier: "territoryLoadCell")
+        territoryCollection.register(TerritoryLoadCell.self, forCellWithReuseIdentifier: "territoryLoadCell")
+        territoryCollection.register(UINib(nibName: "TerritoryLoadCell", bundle: nil), forCellWithReuseIdentifier: "territoryLoadCell")
         
         // App Info
         if let appModel = AppList.sharedInst.getSelectedModel(),
             let urlStr = appModel.icon100,
-            let url =  NSURL(string:urlStr) {
-            appIcon.sd_setImageWithURL(url, placeholderImage: UIImage(named:"defaulticon"))
+            let url =  URL(string:urlStr) {
+            appIcon.sd_setImage(with: url, placeholderImage: UIImage(named:"defaulticon"))
             appName.text = appModel.appName
             let totalReviewsLoaded = ReviewLoadManager.sharedInst.reviews.count
             aveRating.text = "Reviews Loaded : "+String(totalReviewsLoaded)
@@ -52,17 +52,17 @@ extension ReviewListVC: UICollectionViewDataSource {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ReviewLoadManager.sharedInst.loadStates.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("territoryLoadCell", forIndexPath: indexPath) as! TerritoryLoadCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "territoryLoadCell", for: indexPath as IndexPath) as! TerritoryLoadCell
         
         let loadState = ReviewLoadManager.sharedInst.loadStateArray[indexPath.row]
         
-        cell.setup(loadState)
+        cell.setup(loadState: loadState)
         cell.setNeedsUpdateConstraints()
         
         return cell
@@ -71,7 +71,7 @@ extension ReviewListVC: UICollectionViewDataSource {
 
 extension ReviewListVC: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let sideSize = CGSize(width: 26,height: 43)
         return sideSize;
     }
@@ -83,10 +83,9 @@ extension ReviewListVC {
     func scrollFlagsToEnd() {
         let finalPos =  ReviewLoadManager.sharedInst.loadStateArray.count - 1
         if finalPos > 0 {
-            let path = NSIndexPath(forItem: finalPos, inSection: 0)
-            if path != NSNotFound {
-                territoryCollection.scrollToItemAtIndexPath(path, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
-            }
+            let path = IndexPath(row: finalPos, section: 0)
+            territoryCollection.scrollToItem(at: path, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+            
         }
     }
     
@@ -97,14 +96,14 @@ extension ReviewListVC {
         }
         
         let finalPos =  0
-        let path = NSIndexPath(forItem: finalPos, inSection: 0)
-        territoryCollection.scrollToItemAtIndexPath(path, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        let path = IndexPath(row: finalPos, section: 0)
+        territoryCollection.scrollToItem(at: path, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
     }
 
     func registerTerritoryNotificationsForLoader() {
-        NSNotificationCenter.addObserver(self,sel: .startLoading, name: Const.load.loadStart)
-        NSNotificationCenter.addObserver(self, sel: .finishedLoading, name: Const.load.allLoadingCompleted)
-        NSNotificationCenter.addObserver(self, sel: .updateLoadingCount, name:Const.load.updateAmount)
+        NotificationCenter.addObserver(observer: self, sel: .startLoading, name: Const.load.loadStart)
+        NotificationCenter.addObserver(observer: self, sel: .finishedLoading, name: Const.load.allLoadingCompleted)
+        NotificationCenter.addObserver(observer: self, sel: .updateLoadingCount, name:Const.load.updateAmount)
     }
 
     func startLoading() {

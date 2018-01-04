@@ -31,9 +31,8 @@ class AppList {
     }
     
     func getFilePath() -> String? {
-        if let documentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first,
-            let pathWithFileName = documentsDirectory.URLByAppendingPathComponent("appListFile").path {
-                return pathWithFileName
+        if let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first {
+                return documentsDirectory.appendingPathComponent("appListFile").path
         }
         return nil
     }
@@ -46,7 +45,7 @@ class AppList {
     
     func load() -> Bool {
         if let pathWithFileName = getFilePath(),
-            let models = NSKeyedUnarchiver.unarchiveObjectWithFile(pathWithFileName) as? [AppModel] {
+            let models = NSKeyedUnarchiver.unarchiveObject(withFile: pathWithFileName) as? [AppModel] {
             self.appModels = models
             return true
         }

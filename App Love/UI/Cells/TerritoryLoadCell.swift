@@ -37,18 +37,18 @@ class TerritoryLoadCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         bar.alpha = 1
-        bar.backgroundColor = UIColor.whiteColor()
+        bar.backgroundColor = UIColor.white
         countLabel.text = "0"
         flagIcon.image = nil
     }
     
     func registerNotifications() {
         unregisterNotifications()
-        NSNotificationCenter.addObserver(self,sel:.loadStart, name: Const.load.loadStart)
-        NSNotificationCenter.addObserver(self,sel:.updateAmount, name: Const.load.updateAmount)
-        NSNotificationCenter.addObserver(self,sel:.dataError, name: Const.load.dataError)
-        NSNotificationCenter.addObserver(self,sel:.territoryStarted, name: Const.load.territoryStart)
-        NSNotificationCenter.addObserver(self,sel:.territoryCompleted, name: Const.load.territoryDone)
+        NotificationCenter.addObserver(observer: self,sel:.loadStart, name: Const.load.loadStart)
+        NotificationCenter.addObserver(observer: self,sel:.updateAmount, name: Const.load.updateAmount)
+        NotificationCenter.addObserver(observer: self,sel:.dataError, name: Const.load.dataError)
+        NotificationCenter.addObserver(observer: self,sel:.territoryStarted, name: Const.load.territoryStart)
+        NotificationCenter.addObserver(observer: self,sel:.territoryCompleted, name: Const.load.territoryDone)
     }
     
     func updateAmount(notification: NSNotification) {
@@ -57,7 +57,7 @@ class TerritoryLoadCell: UICollectionViewCell {
         
         if territory == ter {
             guard let loadState = dic["loadState"] as? LoadState else { return }
-            bar.backgroundColor = UIColor.greenColor()
+            bar.backgroundColor = UIColor.green
             countLabel.text = "\(loadState.count)"
         }
     }
@@ -66,7 +66,7 @@ class TerritoryLoadCell: UICollectionViewCell {
         guard let dic = notification.userInfo else { return }
         guard let ter = dic["territory"] as? String else { return }
         if territory == ter {
-            bar.backgroundColor = UIColor.greenColor()
+            bar.backgroundColor = UIColor.green
             self.bar.alpha = 1
         }
     }
@@ -75,8 +75,8 @@ class TerritoryLoadCell: UICollectionViewCell {
         guard let dic = notification.userInfo else { return }
         guard let ter = dic["territory"] as? String else { return }
         if territory == ter {
-            bar.backgroundColor = UIColor.greenColor()
-            UIView.animateWithDuration(0.5, animations: { () -> Void in // shift down
+            bar.backgroundColor = UIColor.green
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in // shift down
                 self.bar.alpha = 0
             })
         }
@@ -86,17 +86,17 @@ class TerritoryLoadCell: UICollectionViewCell {
         guard let dic = notification.userInfo else { return }
         guard let ter = dic["territory"] as? String else { return }
         if territory == ter {
-            bar.backgroundColor = UIColor.redColor()
+            bar.backgroundColor = UIColor.red
         }
     }
     
     func loadStart() {
         registerNotifications()
-        bar.backgroundColor = UIColor.whiteColor()
+        bar.backgroundColor = UIColor.white
     }
     
     func unregisterNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     deinit {
@@ -108,8 +108,8 @@ class TerritoryLoadCell: UICollectionViewCell {
 
 private extension Selector {
     static let loadStart = #selector(TerritoryLoadCell.loadStart)
-    static let dataError = #selector(TerritoryLoadCell.dataError(_:))
-    static let territoryStarted = #selector(TerritoryLoadCell.territoryStarted(_:))
-    static let territoryCompleted = #selector(TerritoryLoadCell.territoryCompleted(_:))
-    static let updateAmount = #selector(TerritoryLoadCell.updateAmount(_:))
+    static let dataError = #selector(TerritoryLoadCell.dataError(notification:))
+    static let territoryStarted = #selector(TerritoryLoadCell.territoryStarted(notification:))
+    static let territoryCompleted = #selector(TerritoryLoadCell.territoryCompleted(notification:))
+    static let updateAmount = #selector(TerritoryLoadCell.updateAmount(notification:))
 }
