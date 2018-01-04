@@ -16,7 +16,7 @@ class ReviewLoadManager: NSObject, ProgressDelegate {
     
     var reviews = [ReviewModel]()
     var loadStates = [String:LoadState]() // loading state for every territory.
-    var loadingQueue:NSOperationQueue?
+    var loadingQueue:OperationQueue?
     var firstQuickUpdate:Bool = false
     var loadStateArray = [LoadState]()
 

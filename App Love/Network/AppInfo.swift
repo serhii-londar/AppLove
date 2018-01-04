@@ -12,7 +12,7 @@ import Alamofire
 
 class AppInfo {
 
-    class func get(appID:String, completion: (model:AppModel?,succeeded: Bool, error:NSError?) -> Void) {
+    class func get(appID:String, completion: (_ model:AppModel?,_ succeeded: Bool, _ error:NSError?) -> Void) {
         let url = "https://itunes.apple.com/lookup?id=\(appID)"
         
         Alamofire.request(.GET, url).responseJSON { response in

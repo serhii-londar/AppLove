@@ -19,7 +19,7 @@ protocol ProgressDelegate : class {
     func territoryLoadCompleted(country:String)
 }
 
-class TerritoryLoadOperation: NSOperation {
+class TerritoryLoadOperation: Operation {
 
     let semaphore:dispatch_semaphore_t = dispatch_semaphore_create(0)
     weak var delegate:ProgressDelegate?

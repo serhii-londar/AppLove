@@ -154,7 +154,7 @@ protocol SimpleXmlParser {
 }
 
 /// The implementation of NSXMLParserDelegate and where the lazy parsing actually happens.
-class LazyXMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
+class LazyXMLParser: NSObject, SimpleXmlParser, XMLParserDelegate {
     required init(_ options: SWXMLHashOptions) {
         self.options = options
         super.init()
@@ -187,7 +187,7 @@ class LazyXMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
         parser.parse()
     }
     
-    func parser(parser: NSXMLParser,
+    func parser(parser: XMLParser,
         didStartElement elementName: String,
         namespaceURI: String?,
         qualifiedName qName: String?,
@@ -202,7 +202,7 @@ class LazyXMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
             parentStack.push(currentNode)
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
+    func parser(parser: XMLParser, foundCharacters string: String) {
         if !onMatch() {
             return
         }
@@ -212,7 +212,7 @@ class LazyXMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
         current.addText(string)
     }
     
-    func parser(parser: NSXMLParser,
+    func parser(parser: XMLParser,
         didEndElement elementName: String,
         namespaceURI: String?,
         qualifiedName qName: String?) {
@@ -238,7 +238,7 @@ class LazyXMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
 }
 
 /// The implementation of NSXMLParserDelegate and where the parsing actually happens.
-class XMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
+class XMLParser: NSObject, SimpleXmlParser, XMLParserDelegate {
     required init(_ options: SWXMLHashOptions) {
         self.options = options
         super.init()
@@ -263,7 +263,7 @@ class XMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
         return XMLIndexer(root)
     }
     
-    func parser(parser: NSXMLParser,
+    func parser(parser: XMLParser,
         didStartElement elementName: String,
         namespaceURI: String?,
         qualifiedName qName: String?,
@@ -273,13 +273,13 @@ class XMLParser: NSObject, SimpleXmlParser, NSXMLParserDelegate {
             parentStack.push(currentNode)
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
+    func parser(parser: XMLParser, foundCharacters string: String) {
         let current = parentStack.top()
         
         current.addText(string)
     }
     
-    func parser(parser: NSXMLParser,
+    func parser(parser: XMLParser,
         didEndElement elementName: String,
         namespaceURI: String?,
         qualifiedName qName: String?) {
@@ -342,14 +342,14 @@ public class IndexOps {
 }
 
 /// Returned from SWXMLHash, allows easy element lookup into XML data.
-public enum XMLIndexer: SequenceType {
+public enum XMLIndexer: Sequence {
     case Element(XMLElement)
     case List([XMLElement])
     case Stream(IndexOps)
     case XMLError(Error)
     
     /// Error type that is thrown when an indexing or parsing operation fails.
-    public enum Error: ErrorType {
+    public enum Error: Error {
         case Attribute(attr: String)
         case AttributeValue(attr: String, value: String)
         case Key(key: String)
@@ -564,7 +564,7 @@ public enum XMLIndexer: SequenceType {
 }
 
 /// XMLIndexer extensions
-extension XMLIndexer: BooleanType {
+extension XMLIndexer {
     /// True if a valid XMLIndexer, false if an error type
     public var boolValue: Bool {
         switch self {

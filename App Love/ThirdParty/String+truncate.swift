@@ -14,20 +14,20 @@ extension String {
     func truncate(length: Int, wordSeparator: String = " ", trailing: String = "…") -> String {
         
         if self.characters.count > length {
-            let words = self.componentsSeparatedByString(wordSeparator)
+            let words = self.components(separatedBy: wordSeparator)
             var cumulativeCharacters = 0
             var wordsToInclude:[String] = []
             for word in words {
-                cumulativeCharacters += word.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) + 1
+                cumulativeCharacters += word.lengthOfBytes(using: String.Encoding.utf8) + 1
                 if cumulativeCharacters < length {
                     //puts("cumulativeCharacters: \(cumulativeCharacters), length: \(length)")
                     wordsToInclude.append(word)
                 } else {
-                    return wordsToInclude.joinWithSeparator(wordSeparator) + trailing
+                    return wordsToInclude.joined(separator: wordSeparator) + trailing
                 }
                 
             }
-            return self.substringToIndex(self.startIndex.advancedBy(length)) + trailing
+            return self.substring(to: self.startIndex.advanced(by: length)) + trailing
         } else {
             return self
         }

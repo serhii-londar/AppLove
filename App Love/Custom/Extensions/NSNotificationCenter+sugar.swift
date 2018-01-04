@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension NSNotificationCenter {
+extension NotificationCenter {
     
     class func post (aName: String, object: AnyObject?=nil) {
         NSNotificationCenter.defaultCenter().postNotificationName(aName, object: object)

@@ -1,0 +1,38 @@
+PODS:
+  - Alamofire (4.6.0)
+  - ElasticTransition (3.1.1):
+    - MotionAnimation (~> 0.1.2)
+  - MotionAnimation (0.1.2)
+  - SDWebImage (4.2.3):
+    - SDWebImage/Core (= 4.2.3)
+  - SDWebImage/Core (4.2.3)
+  - SwiftyGlyphs (2.0.0)
+  - SwiftyJSON (4.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - ElasticTransition
+  - SDWebImage
+  - SwiftyGlyphs (from `https://github.com/serhii-londar/SwiftyGlyphs.git`)
+  - SwiftyJSON
+
+EXTERNAL SOURCES:
+  SwiftyGlyphs:
+    :git: https://github.com/serhii-londar/SwiftyGlyphs.git
+
+CHECKOUT OPTIONS:
+  SwiftyGlyphs:
+    :commit: 7a40f16fb0ebd7936afb8368bbe57fac5e0ab80d
+    :git: https://github.com/serhii-londar/SwiftyGlyphs.git
+
+SPEC CHECKSUMS:
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  ElasticTransition: 6c4e4739e32480c864217db912100f3657f6447a
+  MotionAnimation: ff5c8fc2e429d7e10d46ae86819ba9759846c343
+  SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
+  SwiftyGlyphs: 8aaf059b2fa4ee9adb9982b642b86d411f519669
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+
+PODFILE CHECKSUM: 3d832498294468d67411f2b765aea2ff0cb6154d
+
+COCOAPODS: 1.3.1

@@ -29,23 +29,23 @@ class HelpVC: ElasticModalViewController {
 
         let helpText = "TIPS:\n\nCurrently there are \(territoriesSelected) territories selected out of a possible \(allTerritories).\n\nWhen selecting territories manually, the ALL button toggles between ALL and CLEAR.\n\nAfter viewing a translation, return back to this app by tapping the top left corner.\n"
 
-        textView.backgroundColor = .clearColor()
+        textView.backgroundColor = .clear
         textView.text = helpText
-        textView.userInteractionEnabled = false
-        textView.selectable = false
+        textView.isUserInteractionEnabled = false
+        textView.isSelectable = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showAnimatedText()
     }
     
     func fixCutOffTextAfterRotation() {
-        textView.scrollEnabled = false
-        textView.scrollEnabled = true
+        textView.isScrollEnabled = false
+        textView.isScrollEnabled = true
     }
     
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         fixCutOffTextAfterRotation()
     }
     
@@ -56,13 +56,13 @@ class HelpVC: ElasticModalViewController {
         
         if let glyphs = glyphSprites {
             glyphs.text = "At Your Service!"
-            glyphs.setLocation(skview, pos: CGPoint(x:0,y:20))
+            glyphs.setLocation(skview: skview, pos: CGPoint(x:0,y:20))
             glyphs.centerTextToView()
-            HelpAnimation().startAnimation(glyphs, viewWidth:skview.frame.width)
+            HelpAnimation().startAnimation(glyphSprites: glyphs, viewWidth:skview.frame.width)
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        dismiss(animated: true, completion: nil)
     }
 }

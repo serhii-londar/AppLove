@@ -12,83 +12,89 @@ import UIKit
 extension ReviewListVC {
     
     func displaySortActionSheet(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let ratingSortAction = UIAlertAction(title: "Sort by Rating", style: .Default) { action -> Void in
-            self.allReviews.sortInPlace({ $0.rating > $1.rating })
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let ratingSortAction = UIAlertAction(title: "Sort by Rating", style: .default) { action -> Void in
+//            self.allReviews.sort(by: { (a, b) -> Bool in
+//                return UIContentSizeCategory(rawValue: a.rating!) > UIContentSizeCategory(rawValue: b.rating!)
+//            })
+            DispatchQueue.main.sync(execute: {
                 self.tableView.reloadData()
-                self.tableView.setContentOffset(CGPointZero, animated:true)
+                self.tableView.setContentOffset(CGPoint.zero, animated:true)
             })
         }
-        let versionSortAction = UIAlertAction(title: "Sort by Version", style: .Default) { action -> Void in
-            self.allReviews.sortInPlace({ $0.version > $1.version })
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        let versionSortAction = UIAlertAction(title: "Sort by Version", style: .default) { action -> Void in
+//            self.allReviews.sort(by: { (a, b) -> Bool in
+//                return UIContentSizeCategory(rawValue: a.version!) > UIContentSizeCategory(rawValue: b.version!)
+//            })
+            DispatchQueue.main.sync(execute: {
                 self.tableView.reloadData()
-                self.tableView.setContentOffset(CGPointZero, animated:true)
+                self.tableView.setContentOffset(CGPoint.zero, animated:true)
             })
         }
-        let territorySortAction = UIAlertAction(title: "Sort by Territory", style: .Default) { action -> Void in
-            self.allReviews.sortInPlace({ $0.territory < $1.territory })
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        let territorySortAction = UIAlertAction(title: "Sort by Territory", style: .default) { action -> Void in
+//            self.allReviews.sort(by: { (a, b) -> Bool in
+//                return UIContentSizeCategory(rawValue: a.territory!) > UIContentSizeCategory(rawValue: b.territory!)
+//            })
+            DispatchQueue.main.sync(execute: {
                 self.tableView.reloadData()
-                self.tableView.setContentOffset(CGPointZero, animated:true)
+                self.tableView.setContentOffset(CGPoint.zero, animated:true)
             })
         }
-        let actionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(ratingSortAction)
         alertController.addAction(versionSortAction)
         alertController.addAction(territorySortAction)
         alertController.addAction(actionCancel)
-        Theme.alertController(alertController)
+        Theme.alertController(item: alertController)
         if let popoverController = alertController.popoverPresentationController {
             popoverController.barButtonItem = sender
         }
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func removeEmptyTerritories(button: UIBarButtonItem){
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let loadAllAction = UIAlertAction(title: "Load All Territories", style: .Default) { action -> Void in
+        let loadAllAction = UIAlertAction(title: "Load All Territories", style: .default) { action -> Void in
             TerritoryMgr.sharedInst.selectAllTerritories()
-            self.refresh("")
+            self.refresh(sender: "" as AnyObject)
         }
         
-        let loadDefaultAction = UIAlertAction(title: "Load Default Territories", style: .Default) { action -> Void in
+        let loadDefaultAction = UIAlertAction(title: "Load Default Territories", style: .default) { action -> Void in
             let defaultTerritories = TerritoryMgr.sharedInst.getDefaultCountryCodes()
-            TerritoryMgr.sharedInst.setSelectedTerritories(defaultTerritories)
-            self.refresh("")
+            TerritoryMgr.sharedInst.setSelectedTerritories(selectedTerritories: defaultTerritories)
+            self.refresh(sender: "" as AnyObject)
         }
         
-        let removeEmptyAction = UIAlertAction(title: "Remove Empty Territories", style: .Destructive) { action -> Void in
+        let removeEmptyAction = UIAlertAction(title: "Remove Empty Territories", style: .destructive) { action -> Void in
             let nonEmptyTeritories = ReviewLoadManager.sharedInst.getNonEmptyTerritories()
-            TerritoryMgr.sharedInst.setSelectedTerritories(nonEmptyTeritories)
-            self.refresh("")
+            TerritoryMgr.sharedInst.setSelectedTerritories(selectedTerritories: nonEmptyTeritories)
+            self.refresh(sender: "" as AnyObject)
         }
-        let actionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(loadAllAction)
         alertController.addAction(loadDefaultAction)
         alertController.addAction(removeEmptyAction)
         alertController.addAction(actionCancel)
-        Theme.alertController(alertController)
+        Theme.alertController(item: alertController)
         if let popoverController = alertController.popoverPresentationController {
             popoverController.barButtonItem = button
         }
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func displayReviewOptions(model:ReviewModel, button:UIButton) {
         
         guard let title = model.title else { return }
-        let alertController = UIAlertController(title:nil, message: title, preferredStyle: .ActionSheet)
-        let emailAction = UIAlertAction(title: "Email", style: .Default) { action -> Void in
-            self.displayReviewEmail(model)
+        let alertController = UIAlertController(title:nil, message: title, preferredStyle: .actionSheet)
+        let emailAction = UIAlertAction(title: "Email", style: .default) { action -> Void in
+            self.displayReviewEmail(model: model)
         }
-        let translateAction = UIAlertAction(title: "Translate", style: .Default) { action -> Void in
-            self.displayGoogleTranslationViaSafari(model)
+        let translateAction = UIAlertAction(title: "Translate", style: .default) { action -> Void in
+            self.displayGoogleTranslationViaSafari(model: model)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(emailAction)
         alertController.addAction(translateAction)
@@ -97,20 +103,20 @@ extension ReviewListVC {
         if let popOverPresentationController : UIPopoverPresentationController = alertController.popoverPresentationController {
             popOverPresentationController.sourceView = button
             popOverPresentationController.sourceRect = button.bounds
-            popOverPresentationController.permittedArrowDirections = [.Right]
+            popOverPresentationController.permittedArrowDirections = [.right]
         }
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func displayGoogleTranslationViaSafari(model:ReviewModel) {
         guard let title = model.title else  { return }
         guard let reviewText = model.comment else  { return }
         
-        let rawUrlStr = "http://translate.google.ca?text="+title + "\n" + reviewText
-        if let urlEncoded = rawUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()),
+        let rawUrlStr = ("http://translate.google.ca?text="+title + "\n" + reviewText) as NSString
+        if let urlEncoded = rawUrlStr.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
             let url = NSURL(string: urlEncoded) {
-            UIApplication.sharedApplication().openURL(url)
+            UIApplication.shared.openURL(url as URL)
         }
     }
 }

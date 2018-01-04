@@ -40,7 +40,7 @@ class ReviewListVC: UIViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let _ = AppList.sharedInst.getSelectedModel() {
@@ -52,7 +52,7 @@ class ReviewListVC: UIViewController {
         }
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ReviewLoadManager.sharedInst.cancelLoading()
     }
@@ -73,7 +73,7 @@ class ReviewListVC: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         NSNotificationCenter.post(Const.load.orientationChange)
     }
     

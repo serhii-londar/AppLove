@@ -20,7 +20,7 @@ class SelectTerritoryVC: UITableViewController {
         tableSetup()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TerritoryMgr.sharedInst.updateFromTableState(self.countries)
     }

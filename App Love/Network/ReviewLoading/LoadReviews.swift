@@ -25,7 +25,7 @@ class LoadReviews: NSObject {
         return url
     }
     
-    func loadAppReviews(pageInfo:PageInfo, completion: (reviews:[ReviewModel]?,succeeded: Bool, error:NSError?, maxPages:Int) -> Void) {
+    func loadAppReviews(pageInfo:PageInfo, completion: (_ reviews:[ReviewModel]?,_ succeeded: Bool, _ error:NSError?, _ maxPages:Int) -> Void) {
         
         let url = getPageUrl(pageInfo)
         

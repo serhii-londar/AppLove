@@ -22,8 +22,8 @@ class SideMenuVC: UIViewController {
     var dismissByForegroundDrag = true
     var transition = ElasticTransition()
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 
     override func viewDidLoad() {

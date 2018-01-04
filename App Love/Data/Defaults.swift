@@ -12,32 +12,32 @@ import UIKit
 class Defaults: NSObject {
 
     class func setInitialDefaults() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.objectForKey(Const.defaults.loadAllVersionsKey) == nil {
-            defaults.setBool(false, forKey: Const.defaults.loadAllVersionsKey)
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: Const.defaults.loadAllVersionsKey) == nil {
+            defaults.set(false, forKey: Const.defaults.loadAllVersionsKey)
         }
-        if defaults.objectForKey(Const.defaults.maxPagesToLoadKey) == nil {
-            defaults.setInteger(10, forKey: Const.defaults.maxPagesToLoadKey)
+        if defaults.object(forKey: Const.defaults.maxPagesToLoadKey) == nil {
+            defaults.set(10, forKey: Const.defaults.maxPagesToLoadKey)
         }
     }
     
     class func setLoadAll(loadAll:Bool) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(loadAll, forKey: Const.defaults.loadAllVersionsKey)
+        let defaults = UserDefaults.standard
+        defaults.set(loadAll, forKey: Const.defaults.loadAllVersionsKey)
     }
     
     class func getLoadAllBool() -> Bool {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.boolForKey(Const.defaults.loadAllVersionsKey)
+        let defaults = UserDefaults.standard
+        return defaults.bool(forKey: Const.defaults.loadAllVersionsKey)
     }
     
     class func setMaxPagesToLoad(maxPages:Int) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(maxPages, forKey: Const.defaults.maxPagesToLoadKey)
+        let defaults = UserDefaults.standard
+        defaults.set(maxPages, forKey: Const.defaults.maxPagesToLoadKey)
     }
     
     class func getMaxPagesToLoadInt() -> Int {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(Const.defaults.maxPagesToLoadKey)
+        let defaults = UserDefaults.standard
+        return defaults.integer(forKey: Const.defaults.maxPagesToLoadKey)
     }
 }

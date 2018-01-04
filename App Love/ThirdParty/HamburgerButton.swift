@@ -68,9 +68,9 @@ public class HamburgerButton: UIButton {
         bottom.position = CGPoint(x: widthMiddle, y: bottomYPosition)
     }
 
-    override public func intrinsicContentSize() -> CGSize {
-        return CGSize(width: width, height: height)
-    }
+//    override public func intrinsicContentSize() -> CGSize {
+//        return CGSize(width: width, height: height)
+//    }
 
     public var showsMenu: Bool = true {
         didSet {
@@ -139,7 +139,7 @@ public class HamburgerButton: UIButton {
 extension CALayer {
     func ahk_applyKeyframeValuesAnimation(animation: CAKeyframeAnimation) {
         guard let copy = animation.copy() as? CAKeyframeAnimation,
-              let values = copy.values where !values.isEmpty,
+            let values = copy.values, !values.isEmpty,
               let keyPath = copy.keyPath else { return }
 
         self.addAnimation(copy, forKey: keyPath)

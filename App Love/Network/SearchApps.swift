@@ -13,7 +13,7 @@ import SwiftyJSON
 
 class SearchApps {
     
-    class func get(searchStr:String, completion: (appsFound:[AppModel]?,succeeded: Bool, error:NSError?) -> Void) {
+    class func get(searchStr:String, completion: (_ appsFound:[AppModel]?,_ succeeded: Bool, _ error:NSError?) -> Void) {
         let array = searchStr.characters.split {$0 == " "}.map(String.init)
         let searchTermsStr = array.joinWithSeparator("+").lowercaseString
         let url = "https://itunes.apple.com/search?term=\(searchTermsStr)&entity=software"

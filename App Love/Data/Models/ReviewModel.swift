@@ -44,7 +44,7 @@ class ReviewModel {
     }
     
     func setId() {
-        if let userName = self.name, userTitle = self.title {
+        if let userName = self.name, let userTitle = self.title {
              self.reviewID = userName + "-" + userTitle
         }
     }

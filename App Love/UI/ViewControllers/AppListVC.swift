@@ -42,7 +42,7 @@ class AppListVC: UIViewController {
         NSNotificationCenter.addObserver(self, sel: .onMenuClose, name: Const.sideMenu.closeMenu)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (SearchList.sharedInst.appModelDic.count > 0) {
             addAppsSelectedFromSearchResults()
@@ -131,7 +131,7 @@ class AppListVC: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailReviews" {
             addSplitViewCollapseButton(segue)
             return
